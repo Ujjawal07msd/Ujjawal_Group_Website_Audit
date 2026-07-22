@@ -30,7 +30,7 @@
 
 ## 📖 Complete Handbook Specification (WAEF v2.0)
 
-This platform implements the complete **25-Page Master Handbook** authored by **Ujjawal Sharma** (VIT Bhopal University, 2026). It replaces subjective opinions with an objective, reproducible 100-mark mathematical model called the **Website Quality Index (WQI)**.
+This platform implements the complete **25-Page Master Handbook** authored by **Ujjawal Sharma** (Ujjawal Groups). It replaces subjective opinions with an objective, reproducible 100-mark mathematical model called the **Website Quality Index (WQI)**.
 
 ### 📐 Core Mathematical Model
 

@@ -379,6 +379,99 @@ export function DetailedComparisonView({ compareData, onOpenCompareModal, onClos
           </table>
         </div>
       </div>
+
+      {/* AI-Generated Tailored Solutions & Technical Improvement Code Fixes */}
+      <div className="glass-panel p-6 space-y-6 border-purple-500/30 bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-800 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-purple-500/20 border border-purple-500/40 rounded-2xl text-purple-400">
+              <Sparkles className="h-6 w-6 animate-pulse" />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-lg text-white font-heading">
+                AI-Generated Technical Improvement Solutions & Code Fixes
+              </h3>
+              <p className="text-xs text-slate-300">
+                Actionable code patches and priority remedies tailored for {domA} and {domB}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => generateComparativePdfReport(reportA, reportB)}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-purple-600/30 transition-all shrink-0"
+          >
+            <Download className="h-4 w-4" />
+            <span>Export AI Roadmap to PDF 📄</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Solutions for Target A */}
+          <div className="p-5 rounded-2xl bg-slate-900/90 border border-blue-500/40 space-y-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-extrabold text-sm text-blue-400 font-heading">
+                AI Action Plan for {domA} (Score: {scoreA}/100)
+              </h4>
+              <span className="text-[10px] font-mono text-slate-400">TARGET A</span>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                <div className="font-bold text-amber-300 font-mono">P0: WCAG Image Alt Text Patch</div>
+                <p className="text-slate-300 text-[11px]">
+                  Add <code>alt="[Brand Name] [Description]"</code> to all <code>&lt;img&gt;</code> tags and <code>aria-hidden="true"</code> to icons.
+                </p>
+                <div className="bg-slate-900 p-2 rounded text-[10px] font-mono text-emerald-400 overflow-x-auto">
+                  {`<img src="logo.png" alt="${domA} Official Logo" />`}
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                <div className="font-bold text-blue-300 font-mono">P1: Speed & Core Web Vitals LCP</div>
+                <p className="text-slate-300 text-[11px]">
+                  Preload hero image assets and configure HTTP/2 push headers to reduce LCP latency to &lt; 2.0 seconds.
+                </p>
+                <div className="bg-slate-900 p-2 rounded text-[10px] font-mono text-emerald-400 overflow-x-auto">
+                  {`<link rel="preload" href="/assets/hero.jpg" as="image" />`}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Solutions for Target B */}
+          <div className="p-5 rounded-2xl bg-slate-900/90 border border-indigo-500/40 space-y-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-extrabold text-sm text-indigo-400 font-heading">
+                AI Action Plan for {domB} (Score: {scoreB}/100)
+              </h4>
+              <span className="text-[10px] font-mono text-slate-400">TARGET B</span>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                <div className="font-bold text-amber-300 font-mono">P0: Mobile Overflow & Touch Target Fix</div>
+                <p className="text-slate-300 text-[11px]">
+                  Fix 375px mobile viewport overflow and enlarge button touch targets to minimum 48px &times; 48px.
+                </p>
+                <div className="bg-slate-900 p-2 rounded text-[10px] font-mono text-emerald-400 overflow-x-auto">
+                  {`body { max-width: 100vw; overflow-x: hidden; }`}
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                <div className="font-bold text-purple-300 font-mono">P1: HTTPS HSTS & Security Policy</div>
+                <p className="text-slate-300 text-[11px]">
+                  Enforce Strict-Transport-Security (HSTS) and add a Privacy Policy footer link to secure full trust score (+7 pts).
+                </p>
+                <div className="bg-slate-900 p-2 rounded text-[10px] font-mono text-emerald-400 overflow-x-auto">
+                  {`Header set Strict-Transport-Security "max-age=31536000"`}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

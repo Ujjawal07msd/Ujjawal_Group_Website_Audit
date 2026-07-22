@@ -67,16 +67,6 @@ export function generateAuditPdf(reportData, auditorName = "Ujjawal Sharma") {
       </table>
     </div>
 
-    <!-- Penalties Section (If Any) -->
-    ${penalties && penalties.length > 0 ? `
-      <div style="margin-bottom: 20px; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 6px; padding: 12px;">
-        <h3 style="font-size: 12px; margin: 0 0 8px 0; color: #991b1b; text-transform: uppercase;">Applied Handbook Penalty Deductions (Capped at -20 pts)</h3>
-        <ul style="margin: 0; padding-left: 16px; color: #991b1b; font-size: 10px;">
-          ${penalties.map(p => `<li style="margin-bottom: 4px;"><strong>${p.deduction} pts:</strong> ${p.reason}</li>`).join("")}
-        </ul>
-      </div>
-    ` : ""}
-
     <!-- Itemized Handbook Parameter Evaluation Breakdown -->
     <div style="margin-bottom: 20px;">
       <h2 style="font-size: 13px; margin: 0 0 10px 0; color: #0f172a; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">Itemized Handbook Parameter Evaluation Breakdown (15 Parameters - 100 Marks)</h2>
@@ -247,6 +237,51 @@ export function generateComparativePdfReport(reportA, reportB, auditorName = "Uj
             <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportA.crawlSummary.responseTimeMs} ms</td>
             <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportB.crawlSummary.responseTimeMs} ms</td>
             <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: right; font-weight: 700;">${scoreA > scoreB ? domA : domB} Faster</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AI-Generated Strategic Improvement Roadmap -->
+    <div style="margin-bottom: 16px; background: #faf5ff; border: 1.5px solid #c084fc; border-radius: 6px; padding: 10px;">
+      <h3 style="font-size: 11px; margin: 0 0 6px 0; color: #6b21a8; text-transform: uppercase; font-weight: 800;">
+        🤖 AI-Generated Technical Improvement Solutions & Code Fixes
+      </h3>
+      <table style="width: 100%; border-collapse: collapse; font-size: 8.5px;">
+        <thead>
+          <tr style="background: #f3e8ff; text-align: left; font-weight: 700; color: #581c87;">
+            <th style="padding: 4px; border: 1px solid #d8b4fe;">Category</th>
+            <th style="padding: 4px; border: 1px solid #d8b4fe;">Actionable Solution for ${domA}</th>
+            <th style="padding: 4px; border: 1px solid #d8b4fe;">Actionable Solution for ${domB}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e9d5ff;">
+            <td style="padding: 4px; border: 1px solid #e9d5ff; font-weight: 700; color: #6b21a8;">P0: Accessibility & Alt Coverage</td>
+            <td style="padding: 4px; border: 1px solid #e9d5ff;">
+              Add descriptive <code>alt="[Brand Name] [Description]"</code> to all <code>&lt;img&gt;</code> tags. Set decorative icons to <code>aria-hidden="true"</code>.
+            </td>
+            <td style="padding: 4px; border: 1px solid #e9d5ff;">
+              Ensure 100% alt text coverage across all media elements to eliminate the -5 pts WCAG Level A penalty deduction.
+            </td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e9d5ff;">
+            <td style="padding: 4px; border: 1px solid #e9d5ff; font-weight: 700; color: #6b21a8;">P1: Speed & Core Web Vitals</td>
+            <td style="padding: 4px; border: 1px solid #e9d5ff;">
+              Implement <code>&lt;link rel="preload" as="image"&gt;</code> for LCP hero banner and serve WebP compressed images to achieve &lt; 2.5s LCP.
+            </td>
+            <td style="padding: 4px; border: 1px solid #e9d5ff;">
+              Enable Gzip / Brotli compression and cache static JS assets with <code>Cache-Control: max-age=31536000</code>.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 4px; border: 1px solid #e9d5ff; font-weight: 700; color: #6b21a8;">P2: Mobile Responsiveness</td>
+            <td style="padding: 4px; border: 1px solid #e9d5ff;">
+              Apply <code>max-width: 100%; overflow-x: hidden;</code> to root containers to prevent 375px viewport horizontal scroll.
+            </td>
+            <td style="padding: 4px; border: 1px solid #e9d5ff;">
+              Enlarge all mobile interactive touch targets to minimum 48px &times; 48px to comply with Google Mobile-Friendly guidelines.
+            </td>
           </tr>
         </tbody>
       </table>
