@@ -26,7 +26,7 @@ export default function App() {
   const [error, setError] = useState(null);
 
   // Modals & Interactivity States
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false); // Off by default for ultra-clean UX
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(true); // Plays clean video animation automatically on site open
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
