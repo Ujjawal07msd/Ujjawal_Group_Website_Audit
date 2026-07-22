@@ -1,25 +1,22 @@
 import React, { useRef, useEffect, useState } from "react";
-import { X, Volume2, VolumeX, Sparkles, ShieldCheck, Play } from "lucide-react";
+import { X, Volume2, VolumeX, Sparkles, ShieldCheck } from "lucide-react";
 
 export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
   const videoRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(false); // Default sound ON
-  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+  const [isMuted, setIsMuted] = useState(false); // Default Sound ON
 
   useEffect(() => {
     if (isOpen && videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.muted = false;
       setIsMuted(false);
-      setAutoplayBlocked(false);
 
       videoRef.current.play().catch((err) => {
-        console.warn("Browser blocked unmuted autoplay, playing muted until user interaction:", err);
+        console.warn("Unmuted autoplay fallback:", err);
         if (videoRef.current) {
           videoRef.current.muted = true;
           setIsMuted(true);
-          setAutoplayBlocked(true);
-          videoRef.current.play().catch((e) => console.error("Playback failed:", e));
+          videoRef.current.play().catch((e) => console.error("Playback error:", e));
         }
       });
     }
@@ -27,22 +24,10 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
 
   if (!isOpen) return null;
 
-  const enableSound = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.volume = 1.0;
-      setIsMuted(false);
-      setAutoplayBlocked(false);
-    }
-  };
-
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
-      if (!videoRef.current.muted) {
-        setAutoplayBlocked(false);
-      }
     }
   };
 
@@ -102,13 +87,8 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
           </div>
         </div>
 
-        {/* Video Player Container */}
-        <div
-          onClick={() => {
-            if (isMuted) enableSound();
-          }}
-          className="relative aspect-video bg-black flex items-center justify-center group overflow-hidden cursor-pointer"
-        >
+        {/* Clean Video Player (No Overlay Banners) */}
+        <div className="relative aspect-video bg-black flex items-center justify-center group overflow-hidden">
           <video
             ref={videoRef}
             src={videoSrc || "/assets/Ujjawal Groups Website Audit video.mp4"}
@@ -123,22 +103,6 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
             <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
             <span>Ujjawal Groups Brand Intro</span>
           </div>
-
-          {/* Autoplay Fallback Sound Overlay Banner */}
-          {isMuted && (
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex flex-col items-center justify-center p-4 text-center transition-all group-hover:bg-black/20">
-              <button
-                onClick={enableSound}
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm rounded-2xl shadow-2xl shadow-blue-500/50 flex items-center gap-3 border border-blue-400/40 animate-bounce"
-              >
-                <Volume2 className="h-5 w-5" />
-                <span>Click Anywhere to Enable Video Sound 🔊</span>
-              </button>
-              <p className="text-xs text-slate-300 mt-2.5 font-mono bg-slate-950/80 px-3 py-1 rounded-md border border-slate-800">
-                Browser audio policy requires 1 click to play full sound
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Modal Footer */}
