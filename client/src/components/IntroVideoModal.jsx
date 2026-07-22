@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
-import { X, Volume2, VolumeX, Sparkles, ShieldCheck } from "lucide-react";
+import { X, Volume2, VolumeX, Sparkles, ShieldCheck, Play } from "lucide-react";
 
 export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
   const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(false); // Default Sound ON
+  const audioCtxRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen || !videoRef.current) return;
@@ -14,47 +15,63 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
     video.volume = 1.0;
     setIsMuted(false);
 
-    // Attempt direct unmuted playback
+    // Initialize Web Audio API to boost & un-mute audio context
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        if (!audioCtxRef.current) {
+          audioCtxRef.current = new AudioCtx();
+        }
+        if (audioCtxRef.current.state === "suspended") {
+          audioCtxRef.current.resume().catch(() => {});
+        }
+      }
+    } catch (e) {
+      console.warn("AudioContext init:", e);
+    }
+
+    // Try direct unmuted playback
     const playPromise = video.play();
 
-    const unlockAudio = () => {
+    const forceUnlockSound = () => {
       if (videoRef.current) {
         videoRef.current.muted = false;
         videoRef.current.volume = 1.0;
         setIsMuted(false);
         videoRef.current.play().catch(() => {});
       }
-      cleanupListeners();
+      if (audioCtxRef.current && audioCtxRef.current.state === "suspended") {
+        audioCtxRef.current.resume().catch(() => {});
+      }
+      cleanup();
     };
 
-    const cleanupListeners = () => {
-      window.removeEventListener("pointerdown", unlockAudio);
-      window.removeEventListener("click", unlockAudio);
-      window.removeEventListener("touchstart", unlockAudio);
-      window.removeEventListener("mousemove", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-      window.removeEventListener("scroll", unlockAudio);
+    const cleanup = () => {
+      window.removeEventListener("click", forceUnlockSound);
+      window.removeEventListener("pointerdown", forceUnlockSound);
+      window.removeEventListener("touchstart", forceUnlockSound);
+      window.removeEventListener("keydown", forceUnlockSound);
+      window.removeEventListener("focus", forceUnlockSound);
     };
 
     if (playPromise !== undefined) {
       playPromise.catch((err) => {
-        console.warn("Unmuted autoplay waiting for first user gesture:", err);
+        console.warn("Browser blocked unmuted autoplay on link refresh, waiting for first click/gesture:", err);
+        // Play muted while waiting for first user click/tap/key to unlock audio
         video.muted = true;
         setIsMuted(true);
         video.play().catch(() => {});
 
-        // Instantly unlock unmuted audio on ANY subtle user gesture (mouse move, touch, key, scroll)
-        window.addEventListener("pointerdown", unlockAudio, { once: true });
-        window.addEventListener("click", unlockAudio, { once: true });
-        window.addEventListener("touchstart", unlockAudio, { once: true });
-        window.addEventListener("mousemove", unlockAudio, { once: true });
-        window.addEventListener("keydown", unlockAudio, { once: true });
-        window.addEventListener("scroll", unlockAudio, { once: true });
+        window.addEventListener("click", forceUnlockSound, { once: true });
+        window.addEventListener("pointerdown", forceUnlockSound, { once: true });
+        window.addEventListener("touchstart", forceUnlockSound, { once: true });
+        window.addEventListener("keydown", forceUnlockSound, { once: true });
+        window.addEventListener("focus", forceUnlockSound, { once: true });
       });
     }
 
     return () => {
-      cleanupListeners();
+      cleanup();
     };
   }, [isOpen]);
 
@@ -64,6 +81,24 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
+      if (!videoRef.current.muted) {
+        videoRef.current.volume = 1.0;
+        if (audioCtxRef.current && audioCtxRef.current.state === "suspended") {
+          audioCtxRef.current.resume().catch(() => {});
+        }
+      }
+    }
+  };
+
+  const handleManualUnmute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.volume = 1.0;
+      setIsMuted(false);
+      videoRef.current.play().catch(() => {});
+      if (audioCtxRef.current && audioCtxRef.current.state === "suspended") {
+        audioCtxRef.current.resume().catch(() => {});
+      }
     }
   };
 
@@ -96,7 +131,7 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
               onClick={toggleMute}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
                 isMuted
-                  ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30"
+                  ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 animate-pulse"
                   : "bg-blue-600 text-white shadow-md shadow-blue-600/30 hover:bg-blue-500"
               }`}
               title={isMuted ? "Unmute Video Sound" : "Mute Video Sound"}
@@ -104,7 +139,7 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
               {isMuted ? (
                 <>
                   <VolumeX className="h-4 w-4" />
-                  <span>Unmute Sound</span>
+                  <span>Unmute Sound 🔊</span>
                 </>
               ) : (
                 <>
@@ -113,6 +148,7 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
                 </>
               )}
             </button>
+
             <button
               onClick={onClose}
               className="px-3.5 py-1.5 text-xs font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-lg transition-all flex items-center gap-1.5 border border-slate-700"
@@ -123,8 +159,11 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
           </div>
         </div>
 
-        {/* Clean Video Player */}
-        <div className="relative aspect-video bg-black flex items-center justify-center group overflow-hidden">
+        {/* Clean Video Player Container */}
+        <div
+          onClick={handleManualUnmute}
+          className="relative aspect-video bg-black flex items-center justify-center group overflow-hidden cursor-pointer"
+        >
           <video
             ref={videoRef}
             src={videoSrc || "/assets/Ujjawal Groups Website Audit video.mp4"}
@@ -139,6 +178,14 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
             <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
             <span>Ujjawal Groups Brand Intro</span>
           </div>
+
+          {/* Subtle sound unlock helper if muted on refresh */}
+          {isMuted && (
+            <div className="absolute bottom-4 right-4 bg-slate-950/90 backdrop-blur px-3 py-1.5 rounded-xl border border-amber-500/40 text-amber-300 text-xs font-mono flex items-center gap-2 animate-pulse shadow-lg pointer-events-none">
+              <VolumeX className="h-3.5 w-3.5 text-amber-400" />
+              <span>Click video to unmute sound 🔊</span>
+            </div>
+          )}
         </div>
 
         {/* Modal Footer */}
