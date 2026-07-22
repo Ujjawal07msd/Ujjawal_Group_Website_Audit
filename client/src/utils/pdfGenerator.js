@@ -133,77 +133,77 @@ export function generateComparativePdfReport(reportA, reportB, auditorName = "Uj
   const diff = Math.abs(Math.round((scoreA - scoreB) * 10) / 10);
 
   const container = document.createElement("div");
-  container.style.padding = "24px";
+  container.style.padding = "20px";
   container.style.fontFamily = "'Plus Jakarta Sans', Arial, sans-serif";
   container.style.color = "#0f172a";
   container.style.backgroundColor = "#ffffff";
-  container.style.fontSize = "11px";
-  container.style.lineHeight = "1.5";
+  container.style.fontSize = "10px";
+  container.style.lineHeight = "1.4";
 
   container.innerHTML = `
     <!-- PDF Header -->
-    <div style="border-bottom: 2px solid #4f46e5; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div style="border-bottom: 2px solid #4f46e5; padding-bottom: 10px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end;">
       <div>
-        <h1 style="font-size: 18px; margin: 0; color: #1e293b; font-weight: 800; text-transform: uppercase;">WAEF v2.0 SIDE-BY-SIDE COMPARATIVE AUDIT REPORT</h1>
-        <p style="margin: 2px 0 0 0; color: #4338ca; font-size: 11px; font-weight: 700;">
-          Comparative Analysis: ${domA} vs ${domB}
+        <h1 style="font-size: 16px; margin: 0; color: #1e293b; font-weight: 800; text-transform: uppercase;">UNIFIED SIDE-BY-SIDE COMPARATIVE AUDIT REPORT</h1>
+        <p style="margin: 2px 0 0 0; color: #4338ca; font-size: 10px; font-weight: 700;">
+          Direct Comparison: ${domA} vs ${domB}
         </p>
         <p style="margin: 2px 0 0 0; color: #64748b; font-size: 9px;">
-          Engineered by Ujjawal Sharma &bull; Ujjawal Groups
+          Engineered by ${auditorName} &bull; Ujjawal Groups &bull; WAEF v2.0 Evaluator
         </p>
       </div>
-      <div style="text-align: right; font-size: 10px; color: #64748b;">
+      <div style="text-align: right; font-size: 9px; color: #64748b;">
         <div><strong>Date:</strong> ${new Date().toLocaleDateString()}</div>
         <div><strong>Benchmark Winner:</strong> <span style="color: #16a34a; font-weight: 800;">${winner} (+${diff} pts)</span></div>
       </div>
     </div>
 
-    <!-- Comparative Score Summary Cards -->
-    <div style="display: flex; gap: 16px; margin-bottom: 20px;">
-      <div style="flex: 1; background: #f8fafc; border: 2px solid #2563eb; border-radius: 8px; padding: 12px; text-align: center;">
-        <div style="font-size: 10px; color: #2563eb; font-weight: 800; text-transform: uppercase;">SITE A: ${domA}</div>
-        <div style="font-size: 28px; font-weight: 900; color: #2563eb; margin: 4px 0;">${scoreA} <span style="font-size: 14px; color: #64748b;">/ 100</span></div>
-        <div style="font-size: 11px; font-weight: 700; color: #1e293b;">Grade ${reportA.scores.grade} &bull; Penalties: -${reportA.scores.totalPenalties}</div>
-        <div style="font-size: 9px; color: #64748b; margin-top: 4px;">Latency: ${reportA.crawlSummary.responseTimeMs}ms</div>
+    <!-- Executive Side-by-Side Score Summary -->
+    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+      <div style="flex: 1; background: #eff6ff; border: 1.5px solid #2563eb; border-radius: 6px; padding: 10px; text-align: center;">
+        <div style="font-size: 9px; color: #2563eb; font-weight: 800; text-transform: uppercase;">TARGET A: ${domA}</div>
+        <div style="font-size: 24px; font-weight: 900; color: #2563eb; margin: 2px 0;">${scoreA} <span style="font-size: 12px; color: #64748b;">/ 100</span></div>
+        <div style="font-size: 10px; font-weight: 700; color: #1e293b;">Grade ${reportA.scores.grade} &bull; Raw: ${reportA.scores.rawWqi} &bull; Penalties: -${reportA.scores.totalPenalties}</div>
+        <div style="font-size: 8px; color: #64748b; margin-top: 2px;">Latency: ${reportA.crawlSummary.responseTimeMs}ms</div>
       </div>
 
-      <div style="flex: 1; background: #f8fafc; border: 2px solid #4f46e5; border-radius: 8px; padding: 12px; text-align: center;">
-        <div style="font-size: 10px; color: #4f46e5; font-weight: 800; text-transform: uppercase;">SITE B: ${domB}</div>
-        <div style="font-size: 28px; font-weight: 900; color: #4f46e5; margin: 4px 0;">${scoreB} <span style="font-size: 14px; color: #64748b;">/ 100</span></div>
-        <div style="font-size: 11px; font-weight: 700; color: #1e293b;">Grade ${reportB.scores.grade} &bull; Penalties: -${reportB.scores.totalPenalties}</div>
-        <div style="font-size: 9px; color: #64748b; margin-top: 4px;">Latency: ${reportB.crawlSummary.responseTimeMs}ms</div>
+      <div style="flex: 1; background: #eef2ff; border: 1.5px solid #4f46e5; border-radius: 6px; padding: 10px; text-align: center;">
+        <div style="font-size: 9px; color: #4f46e5; font-weight: 800; text-transform: uppercase;">TARGET B: ${domB}</div>
+        <div style="font-size: 24px; font-weight: 900; color: #4f46e5; margin: 2px 0;">${scoreB} <span style="font-size: 12px; color: #64748b;">/ 100</span></div>
+        <div style="font-size: 10px; font-weight: 700; color: #1e293b;">Grade ${reportB.scores.grade} &bull; Raw: ${reportB.scores.rawWqi} &bull; Penalties: -${reportB.scores.totalPenalties}</div>
+        <div style="font-size: 8px; color: #64748b; margin-top: 2px;">Latency: ${reportB.crawlSummary.responseTimeMs}ms</div>
       </div>
     </div>
 
-    <!-- 15-Parameter Side-by-Side Breakdown -->
-    <div style="margin-bottom: 20px;">
-      <h3 style="font-size: 12px; margin: 0 0 8px 0; color: #0f172a; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">15-Parameter Side-by-Side WQI Comparison Table</h3>
-      <table style="width: 100%; border-collapse: collapse; font-size: 10px;">
+    <!-- 15-Parameter Side-by-Side Evaluation Table -->
+    <div style="margin-bottom: 16px;">
+      <h3 style="font-size: 11px; margin: 0 0 6px 0; color: #0f172a; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px;">Side-by-Side 15-Parameter Evaluation Table (100 Marks Total)</h3>
+      <table style="width: 100%; border-collapse: collapse; font-size: 9px;">
         <thead>
           <tr style="background: #f1f5f9; text-align: left; font-weight: 700; color: #334155;">
-            <th style="padding: 5px; border: 1px solid #cbd5e1;">#</th>
-            <th style="padding: 5px; border: 1px solid #cbd5e1;">Parameter Name</th>
-            <th style="padding: 5px; border: 1px solid #cbd5e1; text-align: center;">Weight</th>
-            <th style="padding: 5px; border: 1px solid #cbd5e1; text-align: center;">${domA}</th>
-            <th style="padding: 5px; border: 1px solid #cbd5e1; text-align: center;">${domB}</th>
-            <th style="padding: 5px; border: 1px solid #cbd5e1; text-align: center;">Lead / Advantage</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: center;">#</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1;">Parameter Name & Standard</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: center;">Weight</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: center; color: #2563eb;">${domA}</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: center; color: #4f46e5;">${domB}</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: center;">Parameter Lead</th>
           </tr>
         </thead>
         <tbody>
           ${reportA.parameters.map((pA, idx) => {
             const pB = reportB.parameters[idx] || { parameterScore: 0 };
             const pDiff = Math.round((pA.parameterScore - pB.parameterScore) * 10) / 10;
-            const leadText = pDiff > 0 ? `${domA} (+${pDiff})` : pDiff < 0 ? `${domB} (+${Math.abs(pDiff)})` : "Equal";
+            const leadText = pDiff > 0 ? `${domA} (+${pDiff})` : pDiff < 0 ? `${domB} (+${Math.abs(pDiff)})` : "Tied";
             const leadColor = pDiff > 0 ? "#16a34a" : pDiff < 0 ? "#4338ca" : "#64748b";
 
             return `
               <tr style="border-bottom: 1px solid #e2e8f0;">
-                <td style="padding: 5px; border: 1px solid #e2e8f0; font-weight: 700;">${pA.id}</td>
-                <td style="padding: 5px; border: 1px solid #e2e8f0; font-weight: 600;">${pA.name}</td>
-                <td style="padding: 5px; border: 1px solid #e2e8f0; text-align: center;">${pA.weight}</td>
-                <td style="padding: 5px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700; color: #2563eb;">${pA.parameterScore}</td>
-                <td style="padding: 5px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700; color: #4f46e5;">${pB.parameterScore}</td>
-                <td style="padding: 5px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700; color: ${leadColor};">${leadText}</td>
+                <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;">${pA.id}</td>
+                <td style="padding: 4px; border: 1px solid #e2e8f0; font-weight: 600; color: #0f172a;">${pA.name} <span style="font-size: 8px; color: #64748b;">(${pA.standard})</span></td>
+                <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;">${pA.weight}</td>
+                <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700; color: #2563eb;">${pA.parameterScore}</td>
+                <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700; color: #4f46e5;">${pB.parameterScore}</td>
+                <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700; color: ${leadColor};">${leadText}</td>
               </tr>
             `;
           }).join("")}
@@ -211,38 +211,57 @@ export function generateComparativePdfReport(reportA, reportB, auditorName = "Uj
       </table>
     </div>
 
-    <!-- Comparative Crawl Metrics -->
-    <div style="margin-bottom: 20px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px;">
-      <h3 style="font-size: 11px; margin: 0 0 6px 0; color: #1e293b; text-transform: uppercase;">Empirical Crawl Metrics Comparison</h3>
+    <!-- Comparative Crawl & Performance Metrics Table -->
+    <div style="margin-bottom: 16px;">
+      <h3 style="font-size: 11px; margin: 0 0 6px 0; color: #0f172a; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px;">Side-by-Side Crawl & Performance Metrics</h3>
       <table style="width: 100%; border-collapse: collapse; font-size: 9px;">
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 4px;"><strong>HTTPS SSL Encryption:</strong></td>
-          <td style="padding: 4px;">${domA}: ${reportA.crawlSummary.isHttps ? 'Yes (Active SSL)' : 'No'}</td>
-          <td style="padding: 4px;">${domB}: ${reportB.crawlSummary.isHttps ? 'Yes (Active SSL)' : 'No'}</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #f1f5f9;">
-          <td style="padding: 4px;"><strong>Mobile 375px Horizontal Overflow:</strong></td>
-          <td style="padding: 4px;">${domA}: ${reportA.crawlSummary.mobileAudit?.hasHorizontalScroll ? 'Overflow FAIL' : 'Clean PASS'}</td>
-          <td style="padding: 4px;">${domB}: ${reportB.crawlSummary.mobileAudit?.hasHorizontalScroll ? 'Overflow FAIL' : 'Clean PASS'}</td>
-        </tr>
-        <tr>
-          <td style="padding: 4px;"><strong>Missing Alt Text Count:</strong></td>
-          <td style="padding: 4px;">${domA}: ${reportA.crawlSummary.missingAltCount || 0} missing</td>
-          <td style="padding: 4px;">${domB}: ${reportB.crawlSummary.missingAltCount || 0} missing</td>
-        </tr>
+        <thead>
+          <tr style="background: #f1f5f9; text-align: left; font-weight: 700; color: #334155;">
+            <th style="padding: 4px; border: 1px solid #cbd5e1;">Metric</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; color: #2563eb;">${domA}</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; color: #4f46e5;">${domB}</th>
+            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: right;">Advantage / Standard</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 4px; border: 1px solid #e2e8f0; font-weight: 600;">HTTPS SSL Encryption</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportA.crawlSummary.isHttps ? 'PASS (Active SSL)' : 'FAIL (Insecure)'}</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportB.crawlSummary.isHttps ? 'PASS (Active SSL)' : 'FAIL (Insecure)'}</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: right;">Strict HTTPS Standard</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 4px; border: 1px solid #e2e8f0; font-weight: 600;">Mobile 375px Horizontal Overflow</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportA.crawlSummary.mobileAudit?.hasHorizontalScroll ? 'FAIL (Horizontal Overflow)' : 'PASS (0px Overflow)'}</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportB.crawlSummary.mobileAudit?.hasHorizontalScroll ? 'FAIL (Horizontal Overflow)' : 'PASS (0px Overflow)'}</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: right;">Mobile 375px Viewport</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 4px; border: 1px solid #e2e8f0; font-weight: 600;">Missing Image Alt Text Count</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportA.crawlSummary.missingAltCount || 0} missing</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportB.crawlSummary.missingAltCount || 0} missing</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: right;">WCAG Level A Standard</td>
+          </tr>
+          <tr>
+            <td style="padding: 4px; border: 1px solid #e2e8f0; font-weight: 600;">5-Sample Response Latency</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportA.crawlSummary.responseTimeMs} ms</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0;">${reportB.crawlSummary.responseTimeMs} ms</td>
+            <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: right; font-weight: 700;">${scoreA > scoreB ? domA : domB} Faster</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
     <!-- PDF Footer -->
-    <div style="border-top: 2px solid #e2e8f0; padding-top: 10px; text-align: center; font-size: 9px; color: #64748b;">
+    <div style="border-top: 2px solid #e2e8f0; padding-top: 10px; margin-top: 16px; text-align: center; font-size: 9px; color: #64748b;">
       <p style="margin: 0;"><strong>Report Prepared By: ${auditorName}</strong> (Ujjawal Groups)</p>
-      <p style="margin: 2px 0 0 0;">Website Audit & Evaluation Framework (WAEF v2.0) &bull; © 2026 Ujjawal Groups. All Rights Reserved.</p>
+      <p style="margin: 2px 0 0 0; color: #2563eb; font-weight: 600;">Website Audit & Evaluation Framework (WAEF v2.0) &bull; © 2026 Ujjawal Groups. All Rights Reserved.</p>
     </div>
   `;
 
   const opt = {
     margin: [8, 8, 8, 8],
-    filename: `WAEF_Comparative_Audit_${domA}_vs_${domB}.pdf`,
+    filename: `Unified_Comparative_Audit_${domA}_vs_${domB}.pdf`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 2, useCORS: true, logging: false },
     jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }

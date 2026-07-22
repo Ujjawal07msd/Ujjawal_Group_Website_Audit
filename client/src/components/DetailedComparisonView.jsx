@@ -55,7 +55,7 @@ export function DetailedComparisonView({ compareData, onOpenCompareModal, onClos
             className="px-4 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-blue-500/30 flex items-center gap-2 border border-blue-400/40 hover:scale-105 transition-all"
           >
             <Download className="h-4 w-4" />
-            <span>Download Comparative PDF Report 📄</span>
+            <span>Download Unified Comparative PDF (1 PDF) 📄</span>
           </button>
 
           <button
