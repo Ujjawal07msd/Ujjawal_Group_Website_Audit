@@ -56,7 +56,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
                 className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 hover:underline"
               >
                 <Sparkles className="h-3 w-3 text-amber-400 animate-pulse" />
-                Play Intro Animation
+                Ujjawal Groups Intro
               </button>
             </div>
           </div>

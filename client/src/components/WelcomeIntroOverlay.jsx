@@ -1,5 +1,5 @@
 import React from "react";
-import { Play, ShieldCheck, ArrowRight } from "lucide-react";
+import { ShieldCheck, ArrowRight, Zap } from "lucide-react";
 
 export function WelcomeIntroOverlay({ isOpen, onStart }) {
   if (!isOpen) return null;
@@ -46,10 +46,8 @@ export function WelcomeIntroOverlay({ isOpen, onStart }) {
             onClick={onStart}
             className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-extrabold text-sm rounded-2xl shadow-2xl shadow-blue-500/40 flex items-center justify-center gap-3 border border-blue-400/40 hover:scale-105 transition-all group"
           >
-            <div className="p-1 rounded-lg bg-white/20">
-              <Play className="h-4 w-4 fill-current" />
-            </div>
-            <span>Launch Platform & Animation 🔊</span>
+            <Zap className="h-4 w-4 fill-current text-amber-300" />
+            <span>Launch Audit Platform</span>
             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>

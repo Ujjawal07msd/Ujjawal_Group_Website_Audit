@@ -86,7 +86,7 @@ export function Footer({ onOpenPrivacy, onOpenTerms, onOpenVideo }) {
                 onClick={onOpenVideo}
                 className="px-3 py-1.5 text-xs font-bold bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-lg hover:bg-blue-600 hover:text-white transition-all flex items-center gap-1.5"
               >
-                <span>Play Brand Intro Video</span>
+                <span>Ujjawal Groups Intro</span>
               </button>
             </div>
           </div>
