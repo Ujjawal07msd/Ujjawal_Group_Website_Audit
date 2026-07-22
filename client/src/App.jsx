@@ -13,9 +13,10 @@ import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
 import { IntroVideoModal } from "./components/IntroVideoModal";
 import { WelcomeIntroOverlay } from "./components/WelcomeIntroOverlay";
 import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
+import { DetailedComparisonView } from "./components/DetailedComparisonView";
 import { AuthModal } from "./components/AuthModal";
 import { Footer } from "./components/Footer";
-import { generateDetailedPdfReport } from "./utils/pdfGenerator";
+import { generateDetailedPdfReport, generateComparativePdfReport } from "./utils/pdfGenerator";
 import { Download, AlertTriangle, ShieldCheck, FileText, Lock, Globe, Share2, X, Sparkles, Check, ArrowRight } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -429,47 +430,36 @@ export default function App() {
         )}
 
         {/* Tab 3: Side-by-Side Comparison Results */}
-        {activeTab === "compare" && compareData && (
+        {activeTab === "compare" && (
           <main className="animate-fadeIn space-y-6">
-            <div className="glass-panel p-6 border-slate-800 bg-slate-950/80">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-                <h2 className="text-lg font-bold text-white font-heading">
-                  Website Quality Index (WQI) Side-by-Side Comparison
-                </h2>
+            {compareData ? (
+              <DetailedComparisonView
+                compareData={compareData}
+                onOpenCompareModal={() => setIsCompareModalOpen(true)}
+                onCloseCompare={() => {
+                  setCompareData(null);
+                  setActiveTab("audit");
+                }}
+              />
+            ) : (
+              <div className="glass-panel p-8 text-center space-y-4 max-w-xl mx-auto border-indigo-500/30">
+                <div className="p-4 bg-indigo-500/10 border border-indigo-500/30 rounded-2xl w-fit mx-auto text-indigo-400">
+                  <Sparkles className="h-8 w-8 animate-pulse" />
+                </div>
+                <h3 className="text-xl font-bold text-white font-heading">
+                  Compare Two Websites Side-by-Side
+                </h3>
+                <p className="text-xs text-slate-300 font-mono leading-relaxed">
+                  Enter any 2 URLs to compare WQI scores across all 15 parameters, crawl latency, penalties, and download side-by-side comparative PDF reports.
+                </p>
                 <button
                   onClick={() => setIsCompareModalOpen(true)}
-                  className="px-3.5 py-1.5 text-xs font-bold bg-indigo-600 text-white rounded-lg"
+                  className="px-6 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-extrabold text-xs rounded-xl shadow-xl shadow-blue-500/30 border border-blue-400/40 hover:scale-105 transition-all"
                 >
-                  Change URLs
+                  Launch URL Comparison Modal &rarr;
                 </button>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                {/* Website A */}
-                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono font-bold text-slate-400 uppercase">Target A</span>
-                    <span className="px-2.5 py-0.5 text-xs font-extrabold rounded bg-emerald-500/20 text-emerald-400">
-                      WQI {compareData.reportA.scores.finalWqi} / 100 ({compareData.reportA.scores.grade})
-                    </span>
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2">{compareData.reportA.meta.domain}</h3>
-                  <p className="text-xs text-slate-400 font-mono mb-4">Response Time: {compareData.reportA.crawlSummary.responseTimeMs}ms</p>
-                </div>
-
-                {/* Website B */}
-                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono font-bold text-slate-400 uppercase">Target B</span>
-                    <span className="px-2.5 py-0.5 text-xs font-extrabold rounded bg-blue-500/20 text-blue-400">
-                      WQI {compareData.reportB.scores.finalWqi} / 100 ({compareData.reportB.scores.grade})
-                    </span>
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2">{compareData.reportB.meta.domain}</h3>
-                  <p className="text-xs text-slate-400 font-mono mb-4">Response Time: {compareData.reportB.crawlSummary.responseTimeMs}ms</p>
-                </div>
-              </div>
-            </div>
+            )}
           </main>
         )}
 
