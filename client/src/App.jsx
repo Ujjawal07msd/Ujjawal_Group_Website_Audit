@@ -12,6 +12,7 @@ import { WelcomeAudioBanner } from "./components/WelcomeAudioBanner";
 import { SampleReportPreview } from "./components/SampleReportPreview";
 import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
 import { IntroVideoModal } from "./components/IntroVideoModal";
+import { EntrySplashOverlay } from "./components/EntrySplashOverlay";
 import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
 import { AuthModal } from "./components/AuthModal";
 import { Footer } from "./components/Footer";
@@ -27,7 +28,8 @@ export default function App() {
   const [error, setError] = useState(null);
 
   // Modals & Interactivity States
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(true); // Open intro video when website loads
+  const [isSplashOpen, setIsSplashOpen] = useState(true); // Entry Splash Animation
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
@@ -295,6 +297,11 @@ export default function App() {
     showToast("Audit report link copied to clipboard!");
   };
 
+  const handleEnterPlatform = () => {
+    setIsSplashOpen(false);
+    setIsVideoModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#070a12] text-slate-100 pb-12 px-4 selection:bg-blue-600 selection:text-white">
       {/* Toast Notification Banner */}
@@ -304,6 +311,12 @@ export default function App() {
           <span>{toastMessage}</span>
         </div>
       )}
+
+      {/* Entry Splash Overlay Triggering 100% Unmuted Audio */}
+      <EntrySplashOverlay
+        isOpen={isSplashOpen}
+        onEnter={handleEnterPlatform}
+      />
 
       {/* Website Opening Video Animation Modal */}
       <IntroVideoModal
