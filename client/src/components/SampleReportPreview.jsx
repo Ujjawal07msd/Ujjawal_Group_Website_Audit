@@ -1,15 +1,23 @@
 import React from "react";
-import { Zap, Play, ShieldAlert, Sparkles, Globe } from "lucide-react";
+import { Zap, Play, ShieldAlert, Sparkles, Globe, Award } from "lucide-react";
 
 export function SampleReportPreview({ onSelectSample }) {
   const samples = [
+    {
+      name: "Ujjawal Groups Platform",
+      url: "https://ujjawal-group-website-audit.vercel.app/",
+      expectedScore: "98.5",
+      grade: "A+",
+      badge: "WAEF Benchmark (98.5)",
+      color: "border-emerald-500/60 text-emerald-400 bg-emerald-500/10 shadow-lg shadow-emerald-500/10"
+    },
     {
       name: "Google Official",
       url: "https://google.com",
       expectedScore: "95.0",
       grade: "A+",
       badge: "Benchmark",
-      color: "border-emerald-500/40 text-emerald-400 bg-emerald-500/10"
+      color: "border-blue-500/40 text-blue-400 bg-blue-500/10"
     },
     {
       name: "IRCTC Next-Gen",
@@ -25,14 +33,6 @@ export function SampleReportPreview({ onSelectSample }) {
       expectedScore: "92.5",
       grade: "A+",
       badge: "SaaS Leader",
-      color: "border-blue-500/40 text-blue-400 bg-blue-500/10"
-    },
-    {
-      name: "Apple Store",
-      url: "https://apple.com",
-      expectedScore: "89.0",
-      grade: "A",
-      badge: "E-Commerce",
       color: "border-indigo-500/40 text-indigo-400 bg-indigo-500/10"
     }
   ];
@@ -61,11 +61,11 @@ export function SampleReportPreview({ onSelectSample }) {
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="font-bold text-xs text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                  <Globe className="h-3.5 w-3.5 text-slate-400" />
+                <span className="font-bold text-xs text-white group-hover:text-blue-400 transition-colors flex items-center gap-1.5 truncate">
+                  <Globe className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                   {item.name}
                 </span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${item.color}`}>
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded border shrink-0 ${item.color}`}>
                   {item.badge}
                 </span>
               </div>
