@@ -6,20 +6,56 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
   const [isMuted, setIsMuted] = useState(false); // Default Sound ON
 
   useEffect(() => {
-    if (isOpen && videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.muted = false;
-      setIsMuted(false);
+    if (!isOpen || !videoRef.current) return;
 
-      videoRef.current.play().catch((err) => {
-        console.warn("Unmuted autoplay fallback:", err);
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          setIsMuted(true);
-          videoRef.current.play().catch((e) => console.error("Playback error:", e));
-        }
+    const video = videoRef.current;
+    video.currentTime = 0;
+    video.muted = false;
+    video.volume = 1.0;
+    setIsMuted(false);
+
+    // Attempt direct unmuted playback
+    const playPromise = video.play();
+
+    const unlockAudio = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+        videoRef.current.volume = 1.0;
+        setIsMuted(false);
+        videoRef.current.play().catch(() => {});
+      }
+      cleanupListeners();
+    };
+
+    const cleanupListeners = () => {
+      window.removeEventListener("pointerdown", unlockAudio);
+      window.removeEventListener("click", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("mousemove", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
+      window.removeEventListener("scroll", unlockAudio);
+    };
+
+    if (playPromise !== undefined) {
+      playPromise.catch((err) => {
+        console.warn("Unmuted autoplay waiting for first user gesture:", err);
+        video.muted = true;
+        setIsMuted(true);
+        video.play().catch(() => {});
+
+        // Instantly unlock unmuted audio on ANY subtle user gesture (mouse move, touch, key, scroll)
+        window.addEventListener("pointerdown", unlockAudio, { once: true });
+        window.addEventListener("click", unlockAudio, { once: true });
+        window.addEventListener("touchstart", unlockAudio, { once: true });
+        window.addEventListener("mousemove", unlockAudio, { once: true });
+        window.addEventListener("keydown", unlockAudio, { once: true });
+        window.addEventListener("scroll", unlockAudio, { once: true });
       });
     }
+
+    return () => {
+      cleanupListeners();
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -87,7 +123,7 @@ export function IntroVideoModal({ isOpen, onClose, logoImg, videoSrc }) {
           </div>
         </div>
 
-        {/* Clean Video Player (No Overlay Banners) */}
+        {/* Clean Video Player */}
         <div className="relative aspect-video bg-black flex items-center justify-center group overflow-hidden">
           <video
             ref={videoRef}
