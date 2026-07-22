@@ -8,6 +8,7 @@ import { PenaltyTracker } from "./components/PenaltyTracker";
 import { DecisionMatrix } from "./components/DecisionMatrix";
 import { ManualAuditSheet } from "./components/ManualAuditSheet";
 import { TrustBar } from "./components/TrustBar";
+import { WelcomeAudioBanner } from "./components/WelcomeAudioBanner";
 import { SampleReportPreview } from "./components/SampleReportPreview";
 import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
 import { IntroVideoModal } from "./components/IntroVideoModal";
@@ -344,6 +345,9 @@ export default function App() {
             showToast("Signed out successfully.");
           }}
         />
+
+        {/* Welcome Interactive Audio & Brand Animation Banner */}
+        <WelcomeAudioBanner onPlayVideo={() => setIsVideoModalOpen(true)} />
 
         {/* 1-Click Sample Previews & Quick Demo Mode */}
         <SampleReportPreview onSelectSample={(url) => handleStartAudit(url, "")} />
