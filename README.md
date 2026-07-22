@@ -1,15 +1,30 @@
-# 🌐 Website Audit AI — WAEF v2.0 Platform
+# 🌐 Ujjawal Groups Website Audit AI — WAEF v2.0 Platform
+
 > **Official Website Quality Index (WQI) 5-Pass Empirical Audit Platform & 25-Page Handbook Implementation**  
-> **Author & Framework Owner:** Ujjawal Sharma (VIT Bhopal University, 2026)  
-> **Copyright:** © 2026 Ujjawal Sharma. All Rights Reserved.  
-> **AI Ensemble Used:** ChatGPT (GPT-4o), Google Gemini 2.5 Flash, & Claude 3.5 Sonnet
+> **Organization:** Ujjawal Groups  
+> **Author & Lead Engineer:** Ujjawal Sharma  
+> **GitHub Profile:** [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)  
+> **Copyright:** © 2026 Ujjawal Groups & Ujjawal Sharma. All Rights Reserved.  
 
 ---
 
 ## 🔗 Live Application & Links
 
-- 🚀 **Live Production Web Application:** [https://website-audit-ai-seven.vercel.app/](https://website-audit-ai-seven.vercel.app/)
-- 📦 **GitHub Repository:** [https://github.com/Ujjawal07msd/WebsiteAudit_AI](https://github.com/Ujjawal07msd/WebsiteAudit_AI)
+- 🚀 **Live Production Web Application:** [https://ujjawal-group-website-audit.vercel.app/](https://ujjawal-group-website-audit.vercel.app/)
+- 👤 **Author GitHub Profile:** [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)
+- 📦 **GitHub Repository:** [https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit](https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit)
+
+---
+
+## ✨ Features & Highlights
+
+- 🎬 **Brand Video Animation Intro**: Interactive opening video animation (`Ujjawal Groups Website Audit video.mp4`) with audio controls and video replay badge.
+- 🔐 **Sign In & Sign Up Authentication**: Built-in account management and profile status.
+- ⚡ **Dynamic Live Audit Counter**: Real-time counter starting at 100+ that auto-increments (+1) on every audit.
+- ⚔️ **Side-by-Side Website Comparison**: Compare two target URLs side-by-side across all 15 audit parameters.
+- 💡 **AI Improvement Roadmap**: Actionable priority fixes (P0, P1) with copyable code snippets.
+- 🛡️ **Corporate Trust & Credibility**: Verified seals, ISO 27001 & WCAG Level AA standards, and customer reviews.
+- 📄 **PDF Report Generation**: Instant export of detailed PDF reports branded under Ujjawal Groups.
 
 ---
 
@@ -17,7 +32,7 @@
 
 This platform implements the complete **25-Page Master Handbook** authored by **Ujjawal Sharma** (VIT Bhopal University, 2026). It replaces subjective opinions with an objective, reproducible 100-mark mathematical model called the **Website Quality Index (WQI)**.
 
-### 📐 Core Mathematical Model (Chapter 2 & Chapter 6)
+### 📐 Core Mathematical Model
 
 $$\text{Parameter Score}_i = \left(\frac{\text{Points Obtained}_i}{\text{Maximum Points}_i}\right) \times \text{Weight}_i \quad \text{for } i = 1 \text{ to } 15$$
 
@@ -34,25 +49,20 @@ $$\text{Final WQI Score} = \max\left(0, \text{Raw WQI} - \text{Total Penalties}\
 When auditing any target URL, the platform runs **5 distinct live scraping passes**:
 
 1. **Pass 1: Desktop DOM & Structural Scrape (1280x800)**
-   - Renders DOM, evaluates single H1 heading hierarchy, images, alt text coverage ratio, title/meta tags, and form fields.
 2. **Pass 2: Mobile Viewport Audit (375x667)**
-   - Measures horizontal layout overflow (`scrollWidth > 375px`), small tap targets (`<40px`), responsive images, and mobile navigation drawers.
 3. **Pass 3: Tablet Viewport Audit (768x1024)**
-   - Evaluates tablet layout reflow and medium screen breakpoint responsiveness.
 4. **Pass 4: Security, SSL & Privacy Policy Audit**
-   - Scrapes HTTPS SSL certificate status, HSTS headers, Privacy Policy link in footer, Terms link, and GDPR cookie banner.
 5. **Pass 5: 5-Sample Network Response Latency Average**
-   - Measures response latency across 5 separate network iterations to calculate the true 5-sample average latency ($ms$).
 
 ---
 
-## 📋 The 15 Major Evaluation Parameters (100 Marks - Chapter 3 & 4)
+## 📋 The 15 Major Evaluation Parameters (100 Marks)
 
 | # | Parameter Name | Weight | Industry Standard | Key Evaluation Criteria |
 | :-: | :--- | :-: | :--- | :--- |
 | **1** | Brand Identity & Consistency | **5** | Brand Guidelines | Logo visibility, color consistency, title value proposition, CTA match. |
-| **2** | Visual Design & Aesthetics | **8** | Visual Design Principles | White space, color palette, modern UI, visual hierarchy (H1 $\rightarrow$ H2 $\rightarrow$ H3). |
-| **3** | Navigation & Info Architecture | **10** | Jakob's Law, 3-Click Rule | Main menu, 3-click reachability, breadcrumb, search bar, footer navigation. |
+| **2** | Visual Design & Aesthetics | **8** | Visual Design Principles | White space, color palette, modern UI, visual hierarchy. |
+| **3** | Navigation & Info Architecture | **10** | Jakob's Law, 3-Click Rule | Main menu, 3-click reachability, search bar, footer navigation. |
 | **4** | Homepage First Impression | **7** | 3-Second Rule | Single H1 purpose, hero CTA above fold, homepage clutter control. |
 | **5** | Typography & Readability | **5** | WCAG 2.2 | Readability, heading scale, line leading, body contrast ratio. |
 | **6** | Accessibility | **10** | WCAG 2.2 Level AA | Contrast ratio $\ge$ 4.5:1, keyboard focus, image alt text coverage ratio. |
@@ -69,62 +79,34 @@ When auditing any target URL, the platform runs **5 distinct live scraping passe
 
 ---
 
-## ⚠️ Official Handbook Penalty System (Chapter 7 - Capped at 20 Points)
+## 💻 Tech Stack & Local Setup
 
-| Critical Failure Description | Handbook Deduction |
-| :--- | :-: |
-| **Missing HTTPS / Invalid SSL Certificate** | `-10 Points` |
-| **Extremely Slow Load (LCP Average > 6.0s)** | `-5 Points` |
-| **Major Accessibility Failure (WCAG Level A / >35% Missing Image ALT)** | `-5 Points` |
-| **Broken Forms (cannot submit successfully)** | `-5 Points` |
-| **Missing Privacy Policy Page Link in Footer** | `-3 Points` |
-| **Intrusive Pop-up Overload (3+ pop-ups)** | `-3 Points` |
-| **404 / Error Pages Not Handled Gracefully** | `-3 Points` |
-| **Horizontal Scroll on Mobile (Width > 375px)** | `-2 Points` |
-| **Auto-Playing Media with Sound Enabled** | `-2 Points` |
-| **Broken Links (per link found)** | `-2 Points` |
+- **Frontend**: React + Vite, TailwindCSS, Lucide Icons, Canvas Confetti
+- **Backend**: Node.js + Express, Puppeteer / Playwright, WAEF v2.0 Rule Engine
+- **Deployment**: Vercel Serverless
 
----
+### Local Development Setup
 
-## 🏅 Final Grade Scale (Chapter 8)
+```bash
+# Clone repository
+git clone https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit.git
+cd "Ujjawal_Groups_Website_Audit"
 
-- **90 – 100**: **Grade A+** (Excellent / Industry Benchmark Standard — Maintain & iterate)
-- **80 – 89**: **Grade A** (Very Good — Minor tweaks only)
-- **70 – 79**: **Grade B** (Good — Address P2 priority issues)
-- **60 – 69**: **Grade C** (Average — Significant UX improvements needed)
-- **50 – 59**: **Grade D** (Needs Improvement — Redesign key sections)
-- **Below 50**: **Grade F** (Major Redesign Required — Full audit & rebuild)
+# Install client dependencies
+cd client
+npm install
+npm run dev
+
+# Install server dependencies (in separate terminal)
+cd ../server
+npm install
+npm start
+```
 
 ---
 
-## 🚆 IRCTC Full Audit Case Study (Chapter 11)
+## 👤 Author & Owner
 
-Applying the 15-parameter WQI framework to `https://www.irctc.co.in`:
-
-- **Audited Website:** `https://www.irctc.co.in`
-- **Auditor:** Ujjawal Sharma (VIT Bhopal University, 2026)
-- **Raw WQI Score:** `47.0 / 100`
-- **Applied Penalties:** `-13 Points` (Broken links: -4, Mobile horizontal scroll: -2, Autoplay audio: -2, WCAG alt text: -5)
-- **Final WQI Score:** **`34.0 / 100`**
-- **Final Grade:** **Grade F — Major Redesign Required**
-
----
-
-## 🤖 Multi-LLM AI Ensemble Attribution (Chapter 12)
-
-This project and handbook were built utilizing an ensemble of three leading AI models:
-
-1. **ChatGPT (OpenAI):** Primary brainstorming, 15-parameter framework structure, WQI math formula, chapter outlines.
-2. **Google Gemini (DeepMind):** Research verification, WCAG 2.2 & Core Web Vitals accuracy, IRCTC audit research.
-3. **Claude (Anthropic):** Code architecture, ReportLab PDF generation, formatting, & quality assurance.
-
----
-
-## 📄 Downloadable Master Handbook & Audit PDF
-
-- **Download Master PDF Handbook:** `WAEF_v2_Master_Handbook_Ujjawal_Sharma.pdf`
-- **Live PDF Report Generator:** Click **Download Detailed PDF Report** on any audited URL in the live app to generate a customized 5-step web scraping report!
-
----
-
-© 2026 **Ujjawal Sharma** (VIT Bhopal University). All Rights Reserved.
+**Ujjawal Sharma**  
+- **GitHub**: [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)  
+- **Organization**: Ujjawal Groups  

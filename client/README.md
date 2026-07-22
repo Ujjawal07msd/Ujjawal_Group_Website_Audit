@@ -1,11 +1,13 @@
-# 🌐 Website Audit AI Client — WAEF v2.0
-> **Live Production URL:** [https://website-audit-ai-seven.vercel.app/](https://website-audit-ai-seven.vercel.app/)  
-> **Author & Framework Owner:** Ujjawal Sharma (VIT Bhopal University, 2026)  
-> **Copyright:** © 2026 Ujjawal Sharma. All Rights Reserved.
+# 🌐 Ujjawal Groups Website Audit AI Client
 
-This client package is built with React, Vite, and Tailwind CSS. It implements Ujjawal Sharma's official 25-page Website Audit & Evaluation Framework (WAEF v2.0) with:
-- 5-Pass Empirical Web Scraping Pipeline.
-- 15 Parameters (100 Marks) weighted scoring.
-- Official Handbook Penalty System (capped at 20 points).
-- Downloadable 5-Step Web Scraping PDF Report generator.
-- Multi-LLM Ensemble Attribution (ChatGPT, Gemini, Claude).
+Live Web Application: [https://ujjawal-group-website-audit.vercel.app/](https://ujjawal-group-website-audit.vercel.app/)  
+Author GitHub Profile: [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)  
+Repository: [https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit](https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit)
+
+## Features
+- 🎬 Brand Video Animation Intro (`Ujjawal Groups Website Audit video.mp4`)
+- 🔐 Sign In & Sign Up Auth Options
+- ⚡ Dynamic Counter starting at 100+ (Auto-increments +1 per audit)
+- ⚔️ Side-by-Side Website Comparison Mode
+- 💡 AI Improvement Roadmap
+- 📄 Branded PDF Report Export

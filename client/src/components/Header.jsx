@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { ShieldCheck, Cpu, ClipboardList, FileCode, Search, ChevronRight, Play, GitCompare, Sparkles } from "lucide-react";
+import { ShieldCheck, Cpu, ClipboardList, FileCode, Search, ChevronRight, Play, GitCompare, Sparkles, User, LogOut, CheckCircle2 } from "lucide-react";
 import { WafSchemaModal } from "./WafSchemaModal";
 
-export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, onSelectSampleUrl }) {
+export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, currentUser, onOpenAuth, onLogout }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   const logoPng = "/assets/Ujjawal Groups Website Audit logo.png";
 
   return (
     <>
-      <header className="glass-panel sticky top-3 z-40 mx-auto max-w-7xl px-5 py-3.5 my-3 flex flex-wrap items-center justify-between gap-4 border border-slate-800/90 shadow-2xl bg-slate-950/80 backdrop-blur-md">
+      <header className="glass-panel sticky top-3 z-40 mx-auto max-w-7xl px-5 py-3.5 my-3 flex flex-wrap items-center justify-between gap-4 border border-slate-800/90 shadow-2xl bg-slate-950/90 backdrop-blur-xl">
         {/* Brand Logo & Title */}
         <div className="flex items-center gap-3.5">
           <button
@@ -28,7 +29,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, on
               }}
             />
             {/* Play Badge Overlay */}
-            <div className="absolute -bottom-1 -right-1 bg-blue-600 group-hover:bg-blue-500 text-white rounded-full p-1 shadow-lg shadow-blue-500/50 flex items-center justify-center">
+            <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-500 group-hover:to-indigo-500 text-white rounded-full p-1 shadow-lg shadow-blue-500/50 flex items-center justify-center">
               <Play className="h-3 w-3 fill-current ml-0.5" />
             </div>
           </button>
@@ -37,7 +38,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, on
             <div className="flex items-center gap-2">
               <h1 className="font-extrabold text-xl text-white tracking-tight font-heading flex items-center gap-2">
                 Website Audit AI
-                <span className="text-xs px-2 py-0.5 font-bold rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm font-sans">
+                <span className="text-xs px-2.5 py-0.5 font-bold rounded-md bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md font-sans">
                   Ujjawal Groups
                 </span>
               </h1>
@@ -76,13 +77,13 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, on
         </div>
 
         {/* Navigation Mode Tabs */}
-        <nav aria-label="Main Audit Navigation" className="flex items-center gap-1 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+        <nav aria-label="Main Audit Navigation" className="flex items-center gap-1 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
           <button
             onClick={() => setActiveTab("audit")}
             aria-label="Live AI Audit Tab"
             className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
               activeTab === "audit"
-                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/30"
                 : "text-slate-400 hover:text-white hover:bg-slate-800"
             }`}
           >
@@ -95,7 +96,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, on
             aria-label="Blank Audit Sheet Tab"
             className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
               activeTab === "manual"
-                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/30"
                 : "text-slate-400 hover:text-white hover:bg-slate-800"
             }`}
           >
@@ -108,25 +109,64 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, on
             aria-label="Compare Websites Mode"
             className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
               activeTab === "compare"
-                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+                ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-600/30"
                 : "text-slate-400 hover:text-white hover:bg-slate-800"
             }`}
           >
-            <GitCompare className="h-3.5 w-3.5 text-indigo-400" />
+            <GitCompare className="h-3.5 w-3.5 text-indigo-300" />
             Compare URLs
           </button>
         </nav>
 
-        {/* Action & GitHub Links */}
+        {/* Auth & GitHub Profile Buttons */}
         <div className="flex items-center gap-2">
+          {/* User Sign In / Profile Button */}
+          {currentUser ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-white hover:border-blue-500 transition-all text-xs font-bold"
+              >
+                <div className="h-6 w-6 rounded-lg bg-blue-600 flex items-center justify-center text-white text-[10px] font-mono">
+                  US
+                </div>
+                <span className="hidden sm:inline-block">{currentUser.name}</span>
+              </button>
+
+              {isProfileMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-2 z-50 animate-fadeIn text-xs">
+                  <div className="px-3 py-2 border-b border-slate-800 font-mono">
+                    <div className="font-bold text-white">{currentUser.name}</div>
+                    <div className="text-[10px] text-slate-400 truncate">{currentUser.email}</div>
+                  </div>
+                  <button
+                    onClick={() => { onLogout(); setIsProfileMenuOpen(false); }}
+                    className="w-full text-left px-3 py-2 text-rose-400 hover:bg-slate-800 rounded-lg flex items-center gap-2 mt-1"
+                  >
+                    <LogOut className="h-3.5 w-3.5" /> Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={onOpenAuth}
+              className="px-3.5 py-1.5 text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white rounded-xl shadow-lg shadow-blue-600/30 flex items-center gap-1.5 transition-all"
+            >
+              <User className="h-3.5 w-3.5" />
+              <span>Sign In / Sign Up</span>
+            </button>
+          )}
+
+          {/* GitHub Profile Link (Ujjawal07msd) */}
           <a
-            href="https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit"
+            href="https://github.com/Ujjawal07msd"
             target="_blank"
             rel="noopener noreferrer"
-            title="View Source on GitHub"
-            className="p-2 text-slate-400 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl transition-all flex items-center justify-center"
+            title="Visit Ujjawal Sharma's GitHub Profile (Ujjawal07msd)"
+            className="p-2 text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-xl transition-all flex items-center justify-center shadow-sm"
           >
-            <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+            <svg className="h-4 w-4 fill-current text-slate-300 hover:text-white" viewBox="0 0 24 24">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
             </svg>
           </a>

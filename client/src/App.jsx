@@ -12,6 +12,7 @@ import { SampleReportPreview } from "./components/SampleReportPreview";
 import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
 import { IntroVideoModal } from "./components/IntroVideoModal";
 import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
+import { AuthModal } from "./components/AuthModal";
 import { Footer } from "./components/Footer";
 import { generateDetailedPdfReport } from "./utils/pdfGenerator";
 import { Download, AlertTriangle, ShieldCheck, FileText, Lock, Globe, Share2, X, Sparkles, Check, ArrowRight } from "lucide-react";
@@ -27,6 +28,11 @@ export default function App() {
   // Modals & Interactivity States
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(true); // Open intro video when website loads
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(() => {
+    const saved = localStorage.getItem("waef_user");
+    return saved ? JSON.parse(saved) : null;
+  });
   const [compareData, setCompareData] = useState(null);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
@@ -310,12 +316,30 @@ export default function App() {
         onRunCompare={handleRunCompare}
       />
 
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLoginSuccess={(user) => {
+          setCurrentUser(user);
+          localStorage.setItem("waef_user", JSON.stringify(user));
+          showToast(`Welcome back, ${user.name}!`);
+        }}
+      />
+
       <div className="max-w-7xl mx-auto">
         <Header
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onOpenVideo={() => setIsVideoModalOpen(true)}
           onOpenCompare={() => setIsCompareModalOpen(true)}
+          currentUser={currentUser}
+          onOpenAuth={() => setIsAuthModalOpen(true)}
+          onLogout={() => {
+            setCurrentUser(null);
+            localStorage.removeItem("waef_user");
+            showToast("Signed out successfully.");
+          }}
         />
 
         {/* 1-Click Sample Previews & Quick Demo Mode */}

@@ -91,14 +91,18 @@ export function Footer({ onOpenPrivacy, onOpenTerms, onOpenVideo }) {
             </div>
           </div>
 
-          {/* Col 2: Navigation & Tools */}
+          {/* Col 2: Navigation & Profiles */}
           <div>
             <h5 className="font-bold text-xs uppercase tracking-wider text-white font-mono mb-4">Audit Navigation</h5>
             <ul className="space-y-2 text-xs">
               <li><a href="#audit-form" className="hover:text-white transition-colors">Live 5-Pass AI Audit</a></li>
               <li><a href="#manual-sheet" className="hover:text-white transition-colors">Blank Audit Sheet</a></li>
               <li><a href="#schema" className="hover:text-white transition-colors">WAEF v2.0 Handbook Schema</a></li>
-              <li><a href="https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-1">GitHub Repository <ExternalLink className="h-3 w-3" /></a></li>
+              <li>
+                <a href="https://github.com/Ujjawal07msd" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-1 text-blue-400">
+                  GitHub Profile (@Ujjawal07msd) <ExternalLink className="h-3 w-3" />
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -153,7 +157,9 @@ export function Footer({ onOpenPrivacy, onOpenTerms, onOpenVideo }) {
 
           <div className="flex items-center gap-1">
             <span>Engineered with precision by</span>
-            <strong className="text-slate-300">Ujjawal Sharma</strong>
+            <a href="https://github.com/Ujjawal07msd" target="_blank" rel="noreferrer" className="text-slate-300 font-bold hover:text-blue-400 hover:underline">
+              Ujjawal Sharma
+            </a>
           </div>
         </div>
       </div>
