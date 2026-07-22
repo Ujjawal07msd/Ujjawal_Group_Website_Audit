@@ -32,6 +32,20 @@ export default function App() {
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
+  // Dynamic Audit Counter starting at 100
+  const [auditCount, setAuditCount] = useState(() => {
+    const saved = localStorage.getItem("waef_audit_count");
+    return saved ? parseInt(saved, 10) : 100;
+  });
+
+  const incrementAuditCount = () => {
+    setAuditCount((prev) => {
+      const next = prev + 1;
+      localStorage.setItem("waef_audit_count", next.toString());
+      return next;
+    });
+  };
+
   const auditorName = "Ujjawal Sharma";
   const logoPng = "/assets/Ujjawal Groups Website Audit logo.png";
   const videoMp4 = "/assets/Ujjawal Groups Website Audit video.mp4";
@@ -92,6 +106,7 @@ export default function App() {
           clearInterval(stepInterval);
           setIsLoading(false);
           setAuditReport(data.report);
+          incrementAuditCount();
           if (data.report.scores.finalWqi >= 80) {
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
           }
@@ -115,6 +130,7 @@ export default function App() {
 
         const fallbackReport = generateFallbackReport(cleanUrl, domain, isHttps, isIrctc, isGoogle, isStripe);
         setAuditReport(fallbackReport);
+        incrementAuditCount();
 
         if (fallbackReport.scores.finalWqi >= 80) {
           confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
@@ -418,7 +434,7 @@ export default function App() {
         )}
 
         {/* Corporate Trust Bar & Social Proof */}
-        <TrustBar />
+        <TrustBar auditCount={auditCount} />
 
         {/* Corporate Footer with FAQ & Legal Links */}
         <Footer
