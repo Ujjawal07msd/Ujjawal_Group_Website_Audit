@@ -8,6 +8,8 @@ import { PenaltyTracker } from "./components/PenaltyTracker";
 import { DecisionMatrix } from "./components/DecisionMatrix";
 import { ManualAuditSheet } from "./components/ManualAuditSheet";
 import { TrustBar } from "./components/TrustBar";
+import { JuspayHeroOrbit } from "./components/JuspayHeroOrbit";
+import { JuspayBentoShowcase } from "./components/JuspayBentoShowcase";
 import { SampleReportPreview } from "./components/SampleReportPreview";
 import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
 import { IntroVideoModal } from "./components/IntroVideoModal";
@@ -359,13 +361,24 @@ export default function App() {
           }}
         />
 
+        {/* Juspay-inspired Interactive Hero & Orbit Section */}
+        <JuspayHeroOrbit
+          onOpenVideo={() => setIsVideoModalOpen(true)}
+          onStartAuditScroll={() => {
+            const el = document.getElementById("audit-form-section");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }}
+        />
+
         {/* 1-Click Sample Previews & Quick Demo Mode */}
         <SampleReportPreview onSelectSample={(url) => handleStartAudit(url, "")} />
 
         {/* Tab 1: Live AI Audit Engine */}
         {activeTab === "audit" && (
           <main className="space-y-6">
-            <UrlAuditForm onStartAudit={handleStartAudit} isLoading={isLoading} auditStep={auditStep} />
+            <div id="audit-form-section">
+              <UrlAuditForm onStartAudit={handleStartAudit} isLoading={isLoading} auditStep={auditStep} />
+            </div>
 
             {error && (
               <div className="glass-panel p-4 bg-rose-950/50 border-rose-600/50 text-rose-300 text-xs flex items-center justify-between gap-4 max-w-4xl mx-auto">
@@ -462,6 +475,14 @@ export default function App() {
             )}
           </main>
         )}
+
+        {/* Juspay-inspired Bento Features Showcase */}
+        <JuspayBentoShowcase
+          onStartAudit={() => {
+            const el = document.getElementById("audit-form-section");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }}
+        />
 
         {/* Corporate Trust Bar & Social Proof */}
         <TrustBar auditCount={auditCount} />

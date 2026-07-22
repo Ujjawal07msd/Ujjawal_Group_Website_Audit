@@ -1,19 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg-dark: #080c16;
-  --bg-card: #0f172a;
-  --bg-card-hover: #162038;
-  --border-color: #1e293b;
-  --border-glow: #2563eb;
-  --text-primary: #f8fafc;
+  --bg-juspay-dark: #060913;
+  --bg-juspay-card: #0c1222;
+  --bg-juspay-card-hover: #121a30;
+  --border-juspay: #1e293b;
+  --border-juspay-glow: #3b82f6;
+  --text-primary: #ffffff;
   --text-secondary: #94a3b8;
-  --text-muted: #64748b;
   --accent-blue: #2563eb;
+  --accent-indigo: #4f46e5;
   --accent-emerald: #10b981;
-  --accent-amber: #f59e0b;
-  --accent-rose: #ef4444;
 }
 
 * {
@@ -21,78 +19,126 @@
 }
 
 body {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-juspay-dark);
   color: var(--text-primary);
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 60%),
-    radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+    radial-gradient(circle at 80% 10%, rgba(37, 99, 235, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(79, 70, 229, 0.1) 0%, transparent 40%);
 }
 
 h1, h2, h3, h4, .font-heading {
   font-family: 'Outfit', sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 code, pre, .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Corporate Executive Panel Theme */
+/* Juspay-Grade Glass Panel */
 .glass-panel {
-  background: #0f172a;
-  border: 1px solid #1e293b;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: rgba(12, 18, 34, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel:hover {
-  border-color: #334155;
-  box-shadow: 0 14px 30px -5px rgba(0, 0, 0, 0.5);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.15);
 }
 
-.glow-card {
-  border-color: #334155;
+/* Juspay Light Bento Section Styling */
+.juspay-light-card {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 28px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Professional Corporate Typography Headers */
-.gradient-text {
-  color: #ffffff;
+.juspay-light-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.12);
+  border-color: #cbd5e1;
 }
 
-/* Custom Corporate Scrollbar */
+/* Smooth Gradient Text */
+.gradient-text-juspay {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-blue-indigo {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Smooth Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-dark);
+  background: #060913;
 }
 ::-webkit-scrollbar-thumb {
   background: #1e293b;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #3b82f6;
 }
 
-@keyframes spinSlow {
+/* Smooth Orbit Animation */
+@keyframes orbitSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-.spinner {
-  animation: spinSlow 1s linear infinite;
+@keyframes orbitCounterSpin {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-orbit {
+  animation: orbitSpin 35s linear infinite;
+}
+
+.animate-counter-orbit {
+  animation: orbitCounterSpin 35s linear infinite;
+}
+
+/* Marquee Scroll Animation */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marqueeScroll 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.25s ease-out forwards;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
