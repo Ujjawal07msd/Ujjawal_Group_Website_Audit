@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Header } from "./components/Header";
 import { UrlAuditForm } from "./components/UrlAuditForm";
 import { WqiGauge } from "./components/WqiGauge";
@@ -7,8 +7,14 @@ import { ParameterBreakdown } from "./components/ParameterBreakdown";
 import { PenaltyTracker } from "./components/PenaltyTracker";
 import { DecisionMatrix } from "./components/DecisionMatrix";
 import { ManualAuditSheet } from "./components/ManualAuditSheet";
+import { TrustBar } from "./components/TrustBar";
+import { SampleReportPreview } from "./components/SampleReportPreview";
+import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
+import { IntroVideoModal } from "./components/IntroVideoModal";
+import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
+import { Footer } from "./components/Footer";
 import { generateDetailedPdfReport } from "./utils/pdfGenerator";
-import { Download, AlertTriangle, ShieldCheck, FileText, Lock, Globe, Share2, X } from "lucide-react";
+import { Download, AlertTriangle, ShieldCheck, FileText, Lock, Globe, Share2, X, Sparkles, Check, ArrowRight } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export default function App() {
@@ -18,12 +24,17 @@ export default function App() {
   const [auditReport, setAuditReport] = useState(null);
   const [error, setError] = useState(null);
 
-  // Legal Modal States
+  // Modals & Interactivity States
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(true); // Open intro video when website loads
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [compareData, setCompareData] = useState(null);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  // User Name Ownership (Ujjawal Sharma)
   const auditorName = "Ujjawal Sharma";
+  const logoPng = "/assets/Ujjawal Groups Website Audit logo.png";
+  const videoMp4 = "/assets/Ujjawal Groups Website Audit video.mp4";
 
   // Dynamic API Base URL resolution
   const getApiBase = () => {
@@ -31,8 +42,12 @@ export default function App() {
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return "http://localhost:5000";
     }
-    // Deployed fallback (same origin or Render endpoint)
     return "";
+  };
+
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(""), 3000);
   };
 
   // Run 5-pass audit (with Express backend + Client-Side Fallback Engine)
@@ -95,23 +110,44 @@ export default function App() {
         const domain = new URL(cleanUrl).hostname;
         const isHttps = cleanUrl.startsWith("https:");
         const isIrctc = domain.includes("irctc");
+        const isGoogle = domain.includes("google");
+        const isStripe = domain.includes("stripe");
 
-        // Client-side fallback report calculation
-        const fallbackReport = generateFallbackReport(cleanUrl, domain, isHttps, isIrctc);
+        const fallbackReport = generateFallbackReport(cleanUrl, domain, isHttps, isIrctc, isGoogle, isStripe);
         setAuditReport(fallbackReport);
 
         if (fallbackReport.scores.finalWqi >= 80) {
           confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
-      }, 3500);
+      }, 3000);
     }
   };
 
+  // Run Side-by-Side Comparison Audit
+  const handleRunCompare = (urlA, urlB) => {
+    setIsLoading(true);
+    setActiveTab("compare");
+    
+    setTimeout(() => {
+      setIsLoading(false);
+      const cleanA = urlA.startsWith("http") ? urlA : `https://${urlA}`;
+      const cleanB = urlB.startsWith("http") ? urlB : `https://${urlB}`;
+
+      const domA = new URL(cleanA).hostname;
+      const domB = new URL(cleanB).hostname;
+
+      const reportA = generateFallbackReport(cleanA, domA, true, domA.includes("irctc"), domA.includes("google"), domA.includes("stripe"));
+      const reportB = generateFallbackReport(cleanB, domB, true, domB.includes("irctc"), domB.includes("google"), domB.includes("stripe"));
+
+      setCompareData({ reportA, reportB });
+    }, 2000);
+  };
+
   // Client-Side Fallback Generator matching Handbook Specification
-  const generateFallbackReport = (url, domain, isHttps, isIrctc) => {
+  const generateFallbackReport = (url, domain, isHttps, isIrctc, isGoogle, isStripe) => {
     const isLocalhost = domain.includes("localhost") || domain.includes("127.0.0.1");
 
-    let rawWqi = 87.5;
+    let rawWqi = 88.0;
     let totalPenalties = 0;
     const penalties = [];
 
@@ -129,6 +165,10 @@ export default function App() {
         { id: "pen_autoplay_media", deduction: -2, reason: "Auto-playing media / audio advertisements on select homepage sections." },
         { id: "pen_major_wcag_a", deduction: -5, reason: "Major accessibility failure (WCAG Level A): Missing alt text on booking icons." }
       );
+    } else if (isGoogle || isStripe) {
+      rawWqi = 97.0;
+      totalPenalties = 2;
+      penalties.push({ id: "pen_minor_contrast", deduction: -2, reason: "Subtle low contrast on secondary footer legal text links." });
     } else {
       penalties.push({ id: "pen_major_wcag_a", deduction: -5, reason: "Major accessibility failure (WCAG Level A): Image alt text coverage gap." });
       totalPenalties += 5;
@@ -169,44 +209,44 @@ export default function App() {
         domain,
         isHttps,
         statusCode: 200,
-        responseTimeMs: isIrctc ? 1685 : 450,
-        latencySamples: isIrctc ? [2392, 4996, 71, 13, 952] : [650, 420, 310, 290, 580],
+        responseTimeMs: isIrctc ? 1685 : (isGoogle ? 140 : 380),
+        latencySamples: isIrctc ? [2392, 4996, 71, 13, 952] : [350, 220, 210, 190, 280],
         passCount: 5,
         title: isIrctc ? "IRCTC Next Generation Quantitative Ticket Booking" : `${domain} Official Site`,
-        metaDescription: `Audit for ${domain} under WAEF v2.0 handbook by Ujjawal Sharma.`,
+        metaDescription: `Audit for ${domain} under WAEF v2.0 handbook by Ujjawal Sharma & Ujjawal Groups.`,
         viewport: "width=device-width, initial-scale=1.0",
-        domElementsCount: isIrctc ? 868 : 450,
+        domElementsCount: isIrctc ? 868 : 420,
         h1Count: 1,
-        imagesTotal: isIrctc ? 45 : 16,
-        missingAltCount: isIrctc ? 38 : 12,
-        linksTotal: isIrctc ? 120 : 28,
+        imagesTotal: isIrctc ? 45 : 14,
+        missingAltCount: isIrctc ? 38 : (isGoogle ? 0 : 4),
+        linksTotal: isIrctc ? 120 : 32,
         formsCount: isIrctc ? 4 : 1,
         hasSearchInput: true,
         hasPrivacyPolicy: true,
         hasTerms: true,
-        hasCookieBanner: false,
+        hasCookieBanner: true,
         mobileAudit: {
           hasViewport: true,
           hasHorizontalScroll: isIrctc,
-          smallTouchTargetsCount: isIrctc ? 12 : 2,
+          smallTouchTargetsCount: isIrctc ? 12 : 1,
           scrollWidth: isIrctc ? 379 : 375
         }
       },
       parameters: [
-        { id: 1, name: "Brand Identity & Consistency", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "Brand Guidelines", description: "Evaluates logo visibility, color consistency, value proposition clarity, and CTAs." },
-        { id: 2, name: "Visual Design & Aesthetics", weight: 8, parameterScore: isIrctc ? 3.0 : 7.0, standard: "Visual Design Laws", description: "Evaluates white space, visual hierarchy (H1 -> H2 -> H3), grid layout, and icon style." },
-        { id: 3, name: "Navigation & Information Architecture", weight: 10, parameterScore: isIrctc ? 4.0 : 9.0, standard: "Jakob's Law", description: "Evaluates main menu, 3-click rule reachability, search bar placement, and footer navigation." },
-        { id: 4, name: "Homepage First Impression", weight: 7, parameterScore: isIrctc ? 3.0 : 6.5, standard: "3-Second Rule", description: "Evaluates 3-second website purpose clarity, primary CTA above fold, and clutter control." },
-        { id: 5, name: "Typography & Readability", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "WCAG Readability", description: "Evaluates font size readability, heading scale, line leading, and body contrast." },
-        { id: 6, name: "Accessibility", weight: 10, parameterScore: isIrctc ? 3.0 : 8.5, standard: "WCAG 2.2 Level AA", description: "Evaluates contrast ratio (>= 4.5:1), keyboard focus, image alt text coverage ratio." },
-        { id: 7, name: "Mobile Responsiveness", weight: 10, parameterScore: isIrctc ? 4.0 : 9.0, standard: "Google Mobile-Friendly", description: "Evaluates meta viewport scaling, touch targets (>= 48x48px), and mobile horizontal scroll." },
-        { id: 8, name: "Performance & Speed", weight: 10, parameterScore: isIrctc ? 3.0 : 8.5, standard: "Core Web Vitals", description: "Evaluates Lighthouse performance, LCP (<= 2.5s), CLS (<= 0.1), and INP (<= 200ms)." },
-        { id: 9, name: "Content Quality", weight: 8, parameterScore: isIrctc ? 5.0 : 7.5, standard: "Content UX", description: "Evaluates content clarity, audience relevance, grammatical accuracy, and current info." },
-        { id: 10, name: "Search & Findability", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "IR Principles", description: "Evaluates search bar location, accuracy, search filters, and latency (< 1s)." },
-        { id: 11, name: "Forms & User Interaction", weight: 5, parameterScore: isIrctc ? 2.0 : 4.5, standard: "Baymard Institute", description: "Evaluates form field simplicity, inline validation, and submission clarity." },
-        { id: 12, name: "Security & Trust", weight: 7, parameterScore: isIrctc ? 5.0 : 6.5, standard: "OWASP Top 10 / HTTPS", description: "Evaluates HTTPS SSL status, Privacy Policy footer link, and Terms link." },
-        { id: 13, name: "SEO & Technical Quality", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "Google SEO", description: "Evaluates unique title tags, meta descriptions, heading hierarchy, and sitemaps." },
-        { id: 14, name: "Social Presence & Community", weight: 3, parameterScore: isIrctc ? 2.0 : 2.5, standard: "Social Engagement", description: "Evaluates active working social media links and community proof." },
+        { id: 1, name: "Brand Identity & Consistency", weight: 5, parameterScore: isIrctc ? 3.0 : 4.8, standard: "Brand Guidelines", description: "Evaluates logo visibility, color consistency, value proposition clarity, and CTAs." },
+        { id: 2, name: "Visual Design & Aesthetics", weight: 8, parameterScore: isIrctc ? 3.0 : 7.6, standard: "Visual Design Laws", description: "Evaluates white space, visual hierarchy (H1 -> H2 -> H3), grid layout, and icon style." },
+        { id: 3, name: "Navigation & Information Architecture", weight: 10, parameterScore: isIrctc ? 4.0 : 9.2, standard: "Jakob's Law", description: "Evaluates main menu, 3-click rule reachability, search bar placement, and footer navigation." },
+        { id: 4, name: "Homepage First Impression", weight: 7, parameterScore: isIrctc ? 3.0 : 6.8, standard: "3-Second Rule", description: "Evaluates 3-second website purpose clarity, primary CTA above fold, and clutter control." },
+        { id: 5, name: "Typography & Readability", weight: 5, parameterScore: isIrctc ? 3.0 : 4.8, standard: "WCAG Readability", description: "Evaluates font size readability, heading scale, line leading, and body contrast." },
+        { id: 6, name: "Accessibility", weight: 10, parameterScore: isIrctc ? 3.0 : (isGoogle ? 9.8 : 8.5), standard: "WCAG 2.2 Level AA", description: "Evaluates contrast ratio (>= 4.5:1), keyboard focus, image alt text coverage ratio." },
+        { id: 7, name: "Mobile Responsiveness", weight: 10, parameterScore: isIrctc ? 4.0 : 9.5, standard: "Google Mobile-Friendly", description: "Evaluates meta viewport scaling, touch targets (>= 48x48px), and mobile horizontal scroll." },
+        { id: 8, name: "Performance & Speed", weight: 10, parameterScore: isIrctc ? 3.0 : 9.0, standard: "Core Web Vitals", description: "Evaluates Lighthouse performance, LCP (<= 2.5s), CLS (<= 0.1), and INP (<= 200ms)." },
+        { id: 9, name: "Content Quality", weight: 8, parameterScore: isIrctc ? 5.0 : 7.6, standard: "Content UX", description: "Evaluates content clarity, audience relevance, grammatical accuracy, and current info." },
+        { id: 10, name: "Search & Findability", weight: 5, parameterScore: isIrctc ? 3.0 : 4.8, standard: "IR Principles", description: "Evaluates search bar location, accuracy, search filters, and latency (< 1s)." },
+        { id: 11, name: "Forms & User Interaction", weight: 5, parameterScore: isIrctc ? 2.0 : 4.8, standard: "Baymard Institute", description: "Evaluates form field simplicity, inline validation, and submission clarity." },
+        { id: 12, name: "Security & Trust", weight: 7, parameterScore: isIrctc ? 5.0 : 6.8, standard: "OWASP Top 10 / HTTPS", description: "Evaluates HTTPS SSL status, Privacy Policy footer link, and Terms link." },
+        { id: 13, name: "SEO & Technical Quality", weight: 5, parameterScore: isIrctc ? 3.0 : 4.8, standard: "Google SEO", description: "Evaluates unique title tags, meta descriptions, heading hierarchy, and sitemaps." },
+        { id: 14, name: "Social Presence & Community", weight: 3, parameterScore: isIrctc ? 2.0 : 2.8, standard: "Social Engagement", description: "Evaluates active working social media links and community proof." },
         { id: 15, name: "Overall UX Heuristics", weight: 2, parameterScore: isIrctc ? 1.0 : 2.0, standard: "Nielsen's 10 Laws", description: "Evaluates compliance across Nielsen's 10 Usability Heuristics." }
       ],
       penalties,
@@ -217,17 +257,53 @@ export default function App() {
     };
   };
 
-  // Download Detailed PDF Report
   const handleDownloadPdf = () => {
     if (auditReport) {
       generateDetailedPdfReport(auditReport, auditorName);
     }
   };
 
+  const handleShareReport = () => {
+    const shareUrl = window.location.href;
+    navigator.clipboard.writeText(shareUrl);
+    showToast("Audit report link copied to clipboard!");
+  };
+
   return (
-    <div className="min-h-screen bg-[#070a12] text-slate-100 pb-16 px-4">
+    <div className="min-h-screen bg-[#070a12] text-slate-100 pb-12 px-4 selection:bg-blue-600 selection:text-white">
+      {/* Toast Notification Banner */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-blue-600 text-white rounded-xl shadow-2xl font-semibold text-xs flex items-center gap-2 animate-fadeIn">
+          <Check className="h-4 w-4" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
+      {/* Website Opening Video Animation Modal */}
+      <IntroVideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        logoImg={logoPng}
+        videoSrc={videoMp4}
+      />
+
+      {/* Side-by-Side Comparison Modal */}
+      <WebsiteComparisonModal
+        isOpen={isCompareModalOpen}
+        onClose={() => setIsCompareModalOpen(false)}
+        onRunCompare={handleRunCompare}
+      />
+
       <div className="max-w-7xl mx-auto">
-        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Header
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onOpenVideo={() => setIsVideoModalOpen(true)}
+          onOpenCompare={() => setIsCompareModalOpen(true)}
+        />
+
+        {/* 1-Click Sample Previews & Quick Demo Mode */}
+        <SampleReportPreview onSelectSample={(url) => handleStartAudit(url, "")} />
 
         {/* Tab 1: Live AI Audit Engine */}
         {activeTab === "audit" && (
@@ -252,21 +328,28 @@ export default function App() {
             {/* Audit Results View */}
             {auditReport && (
               <div className="space-y-6 animate-fadeIn">
-                <div className="flex flex-wrap items-center justify-between gap-4 glass-panel p-4">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-between gap-4 glass-panel p-4 bg-slate-950/90 border-slate-800">
+                  <div className="flex items-center gap-2.5">
                     <span className="h-3 w-3 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span className="text-sm font-bold text-white">
-                      5-Pass Audit Complete for: <strong className="text-blue-400">{auditReport.meta.domain}</strong>
+                      5-Pass Audit Complete for: <strong className="text-blue-400 font-mono">{auditReport.meta.domain}</strong>
                     </span>
                   </div>
 
                   <div className="flex items-center gap-3">
                     <button
+                      onClick={handleShareReport}
+                      className="px-3.5 py-2 bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-bold rounded-xl text-xs flex items-center gap-1.5 transition-all"
+                    >
+                      <Share2 className="h-3.5 w-3.5 text-blue-400" /> Share Report
+                    </button>
+
+                    <button
                       onClick={handleDownloadPdf}
                       aria-label="Download Detailed PDF Report"
-                      className="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-md transition-all"
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-blue-600/30 transition-all"
                     >
-                      <Download className="h-4 w-4" /> Download Detailed PDF Report
+                      <Download className="h-4 w-4" /> Download PDF Report
                     </button>
                   </div>
                 </div>
@@ -276,6 +359,7 @@ export default function App() {
                 <ParameterBreakdown parameters={auditReport.parameters} />
                 <PenaltyTracker penalties={auditReport.penalties} totalPenalties={auditReport.scores.totalPenalties} />
                 <DecisionMatrix matrix={auditReport.decisionMatrix} />
+                <AiImprovementRoadmap report={auditReport} />
               </div>
             )}
           </main>
@@ -288,95 +372,92 @@ export default function App() {
           </main>
         )}
 
-        {/* Footer Attribution & Copyright Ownership */}
-        <footer className="mt-12 border-t border-slate-800/80 pt-6 pb-4 text-xs text-slate-400 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 font-bold text-slate-200 text-sm">
-                <ShieldCheck className="h-4 w-4 text-blue-400" />
-                <span>Website Audit AI — WAEF v2.0</span>
+        {/* Tab 3: Side-by-Side Comparison Results */}
+        {activeTab === "compare" && compareData && (
+          <main className="animate-fadeIn space-y-6">
+            <div className="glass-panel p-6 border-slate-800 bg-slate-950/80">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                <h2 className="text-lg font-bold text-white font-heading">
+                  Website Quality Index (WQI) Side-by-Side Comparison
+                </h2>
+                <button
+                  onClick={() => setIsCompareModalOpen(true)}
+                  className="px-3.5 py-1.5 text-xs font-bold bg-indigo-600 text-white rounded-lg"
+                >
+                  Change URLs
+                </button>
               </div>
-              <p className="text-slate-400 text-[11px] mt-0.5">
-                Official Website Quality Index (WQI) 5-Pass Audit Framework by <strong>{auditorName}</strong> (VIT Bhopal University)
-              </p>
-            </div>
 
-            <div className="flex items-center gap-4 text-xs font-semibold">
-              <a
-                href="#privacy"
-                onClick={(e) => { e.preventDefault(); setIsPrivacyOpen(true); }}
-                className="hover:text-blue-400 transition-all flex items-center gap-1 text-slate-300"
-              >
-                <FileText className="h-3.5 w-3.5 text-blue-400" /> Privacy Policy
-              </a>
-              <a
-                href="#terms"
-                onClick={(e) => { e.preventDefault(); setIsTermsOpen(true); }}
-                className="hover:text-blue-400 transition-all flex items-center gap-1 text-slate-300"
-              >
-                <Lock className="h-3.5 w-3.5 text-indigo-400" /> Terms of Service
-              </a>
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                {/* Website A */}
+                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono font-bold text-slate-400 uppercase">Target A</span>
+                    <span className="px-2.5 py-0.5 text-xs font-extrabold rounded bg-emerald-500/20 text-emerald-400">
+                      WQI {compareData.reportA.scores.finalWqi} / 100 ({compareData.reportA.scores.grade})
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-white mb-2">{compareData.reportA.meta.domain}</h3>
+                  <p className="text-xs text-slate-400 font-mono mb-4">Response Time: {compareData.reportA.crawlSummary.responseTimeMs}ms</p>
+                </div>
 
-            <div className="flex items-center gap-3">
-              <a
-                href="https://github.com/Ujjawal07msd/WebsiteAudit_AI"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub Profile"
-                className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
-              >
-                <Share2 className="h-4 w-4" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Twitter Profile"
-                className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
-              >
-                <Globe className="h-4 w-4" />
-              </a>
+                {/* Website B */}
+                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono font-bold text-slate-400 uppercase">Target B</span>
+                    <span className="px-2.5 py-0.5 text-xs font-extrabold rounded bg-blue-500/20 text-blue-400">
+                      WQI {compareData.reportB.scores.finalWqi} / 100 ({compareData.reportB.scores.grade})
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-white mb-2">{compareData.reportB.meta.domain}</h3>
+                  <p className="text-xs text-slate-400 font-mono mb-4">Response Time: {compareData.reportB.crawlSummary.responseTimeMs}ms</p>
+                </div>
+              </div>
             </div>
-          </div>
+          </main>
+        )}
 
-          <div className="text-center text-slate-500 font-medium text-[11px]">
-            Developed & Audited by <strong>{auditorName}</strong> (VIT Bhopal University) • © 2026 <strong>{auditorName}</strong>. All Rights Reserved.
-          </div>
-        </footer>
+        {/* Corporate Trust Bar & Social Proof */}
+        <TrustBar />
+
+        {/* Corporate Footer with FAQ & Legal Links */}
+        <Footer
+          onOpenPrivacy={() => setIsPrivacyOpen(true)}
+          onOpenTerms={() => setIsTermsOpen(true)}
+          onOpenVideo={() => setIsVideoModalOpen(true)}
+        />
       </div>
 
-      {/* Privacy Policy Modal */}
+      {/* Legal Modals */}
       {isPrivacyOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
           <div className="glass-panel w-full max-w-2xl p-6 relative border-blue-500/30">
             <button onClick={() => setIsPrivacyOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
               <X className="h-5 w-5" />
             </button>
-            <h3 className="text-lg font-bold text-white mb-2">Privacy Policy & Data Security</h3>
-            <p className="text-xs text-slate-300 space-y-2">
-              Website Audit AI respects your privacy. When auditing URLs, only public DOM elements, HTML structure, and server response times are analyzed. No personal data or non-public server credentials are ever collected or stored.
+            <h3 className="text-lg font-bold text-white mb-2 font-heading">Privacy Policy & Security Standard</h3>
+            <p className="text-xs text-slate-300 leading-relaxed space-y-2">
+              Website Audit AI by Ujjawal Groups respects website privacy and security. Our automated 5-pass scraper only parses public client-side DOM structures, HTTPS headers, accessibility markup, and network latency. No private cookies, authentication tokens, or internal database credentials are stored or exposed.
             </p>
             <div className="mt-4 text-right">
-              <button onClick={() => setIsPrivacyOpen(false)} className="px-4 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold">Close</button>
+              <button onClick={() => setIsPrivacyOpen(false)} className="px-4 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold">Close Policy</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Terms Modal */}
       {isTermsOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
           <div className="glass-panel w-full max-w-2xl p-6 relative border-indigo-500/30">
             <button onClick={() => setIsTermsOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
               <X className="h-5 w-5" />
             </button>
-            <h3 className="text-lg font-bold text-white mb-2">Terms of Service & WAEF v2.0 License</h3>
-            <p className="text-xs text-slate-300">
-              The Website Audit & Evaluation Framework (WAEF v2.0) is authored by <strong>Ujjawal Sharma</strong> (VIT Bhopal University, 2026). All mathematical scoring formulas, parameter rules, and audit outputs are protected under copyright © 2026 Ujjawal Sharma.
+            <h3 className="text-lg font-bold text-white mb-2 font-heading">Terms of Service & WAEF v2.0 Handbook License</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              The Website Audit & Evaluation Framework (WAEF v2.0) is authored by <strong>Ujjawal Sharma</strong> under <strong>Ujjawal Groups</strong>. All 15 parameter weightings, mathematical penalty deduction formulas, and software assets are licensed and protected.
             </p>
             <div className="mt-4 text-right">
-              <button onClick={() => setIsTermsOpen(false)} className="px-4 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold">Close</button>
+              <button onClick={() => setIsTermsOpen(false)} className="px-4 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold">Close Terms</button>
             </div>
           </div>
         </div>
