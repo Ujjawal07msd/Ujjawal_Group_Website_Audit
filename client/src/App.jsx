@@ -8,11 +8,9 @@ import { PenaltyTracker } from "./components/PenaltyTracker";
 import { DecisionMatrix } from "./components/DecisionMatrix";
 import { ManualAuditSheet } from "./components/ManualAuditSheet";
 import { TrustBar } from "./components/TrustBar";
-import { WelcomeAudioBanner } from "./components/WelcomeAudioBanner";
 import { SampleReportPreview } from "./components/SampleReportPreview";
 import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
 import { IntroVideoModal } from "./components/IntroVideoModal";
-import { EntrySplashOverlay } from "./components/EntrySplashOverlay";
 import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
 import { AuthModal } from "./components/AuthModal";
 import { Footer } from "./components/Footer";
@@ -28,8 +26,7 @@ export default function App() {
   const [error, setError] = useState(null);
 
   // Modals & Interactivity States
-  const [isSplashOpen, setIsSplashOpen] = useState(true); // Entry Splash Animation
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false); // Off by default for ultra-clean UX
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
@@ -297,11 +294,6 @@ export default function App() {
     showToast("Audit report link copied to clipboard!");
   };
 
-  const handleEnterPlatform = () => {
-    setIsSplashOpen(false);
-    setIsVideoModalOpen(true);
-  };
-
   return (
     <div className="min-h-screen bg-[#070a12] text-slate-100 pb-12 px-4 selection:bg-blue-600 selection:text-white">
       {/* Toast Notification Banner */}
@@ -312,13 +304,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Entry Splash Overlay Triggering 100% Unmuted Audio */}
-      <EntrySplashOverlay
-        isOpen={isSplashOpen}
-        onEnter={handleEnterPlatform}
-      />
-
-      {/* Website Opening Video Animation Modal */}
+      {/* Website Opening Video Animation Modal (Triggered on Demand via Logo/Header) */}
       <IntroVideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
@@ -358,9 +344,6 @@ export default function App() {
             showToast("Signed out successfully.");
           }}
         />
-
-        {/* Welcome Interactive Audio & Brand Animation Banner */}
-        <WelcomeAudioBanner onPlayVideo={() => setIsVideoModalOpen(true)} />
 
         {/* 1-Click Sample Previews & Quick Demo Mode */}
         <SampleReportPreview onSelectSample={(url) => handleStartAudit(url, "")} />
