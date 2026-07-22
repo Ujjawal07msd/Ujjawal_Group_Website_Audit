@@ -11,6 +11,7 @@ import { TrustBar } from "./components/TrustBar";
 import { SampleReportPreview } from "./components/SampleReportPreview";
 import { AiImprovementRoadmap } from "./components/AiImprovementRoadmap";
 import { IntroVideoModal } from "./components/IntroVideoModal";
+import { WelcomeIntroOverlay } from "./components/WelcomeIntroOverlay";
 import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
 import { AuthModal } from "./components/AuthModal";
 import { Footer } from "./components/Footer";
@@ -26,7 +27,8 @@ export default function App() {
   const [error, setError] = useState(null);
 
   // Modals & Interactivity States
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(true); // Plays clean video animation automatically on site open
+  const [isWelcomeOpen, setIsWelcomeOpen] = useState(true); // Clean Welcome Screen for Audio Unlocking
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
@@ -294,6 +296,11 @@ export default function App() {
     showToast("Audit report link copied to clipboard!");
   };
 
+  const handleStartIntro = () => {
+    setIsWelcomeOpen(false);
+    setIsVideoModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#070a12] text-slate-100 pb-12 px-4 selection:bg-blue-600 selection:text-white">
       {/* Toast Notification Banner */}
@@ -304,7 +311,13 @@ export default function App() {
         </div>
       )}
 
-      {/* Website Opening Video Animation Modal (Triggered on Demand via Logo/Header) */}
+      {/* Clean Welcome Intro Screen (Triggers 100% Unmuted Audio for Intro Video) */}
+      <WelcomeIntroOverlay
+        isOpen={isWelcomeOpen}
+        onStart={handleStartIntro}
+      />
+
+      {/* Website Opening Video Animation Modal */}
       <IntroVideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
