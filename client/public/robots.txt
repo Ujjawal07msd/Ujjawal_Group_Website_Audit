@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ujjawal-group-website-audit.vercel.app/sitemap.xml
