@@ -4,6 +4,7 @@
 > **Organization:** Ujjawal Groups  
 > **Author & Lead Engineer:** Ujjawal Sharma  
 > **GitHub Profile:** [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)  
+> **LinkedIn Profile:** [https://www.linkedin.com/in/ujjawalsharma0804/](https://www.linkedin.com/in/ujjawalsharma0804/)  
 > **Copyright:** © 2026 Ujjawal Groups & Ujjawal Sharma. All Rights Reserved.  
 
 ---
@@ -12,18 +13,21 @@
 
 - 🚀 **Live Production Web Application:** [https://ujjawal-group-website-audit.vercel.app/](https://ujjawal-group-website-audit.vercel.app/)
 - 👤 **Author GitHub Profile:** [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)
-- 📦 **GitHub Repository:** [https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit](https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit)
+- 💼 **Author LinkedIn Profile:** [https://www.linkedin.com/in/ujjawalsharma0804/](https://www.linkedin.com/in/ujjawalsharma0804/)
+- 📦 **GitHub Repository:** [https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit](https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit)
 
 ---
 
-## ✨ Features & Highlights
+## ✨ Key Features & Enhancements
 
+- 📈 **5-Axis Interactive Radar Graph (`WqiRadarChart.jsx`)**: Renders animated spider web charts plotting Design & UX, Accessibility, Performance, Security & Trust, and SEO Quality.
+- 🗺️ **Interactive Product Roadmap (`ProductRoadmapModal.jsx`)**: Clear 3-phase trajectory (Active Live, In Progress, Planned Horizon).
 - 🎬 **Brand Video Animation Intro**: Interactive opening video animation (`Ujjawal Groups Website Audit video.mp4`) with audio controls and video replay badge.
 - 🔐 **Sign In & Sign Up Authentication**: Built-in account management and profile status.
-- ⚡ **Dynamic Live Audit Counter**: Real-time counter starting at 100+ that auto-increments (+1) on every audit.
+- ⚡ **Dynamic Live Audit Counter**: Real-time counter starting at 100+ that auto-increments (+1) on every audit execution.
 - ⚔️ **Side-by-Side Website Comparison**: Compare two target URLs side-by-side across all 15 audit parameters.
-- 💡 **AI Improvement Roadmap**: Actionable priority fixes (P0, P1) with copyable code snippets.
-- 🛡️ **Corporate Trust & Credibility**: Verified seals, ISO 27001 & WCAG Level AA standards, and customer reviews.
+- 💡 **AI Improvement Roadmap**: Actionable priority fixes (P1, P2) with estimated score point gains (e.g. +13 pts).
+- 🛡️ **WCAG 2.2 AA Accessibility & SEO**: Skip to main content link, high-contrast focus rings, Schema.org JSON-LD, `robots.txt`, and `sitemap.xml`.
 - 📄 **PDF Report Generation**: Instant export of detailed PDF reports branded under Ujjawal Groups.
 
 ---
@@ -73,7 +77,7 @@ When auditing any target URL, the platform runs **5 distinct live scraping passe
 | **11** | Forms & User Interaction | **5** | Baymard Institute | Simple minimal fields, inline real-time validation, specific error messages. |
 | **12** | Security & Trust | **7** | HTTPS, OWASP Top 10 | HTTPS SSL active, Privacy Policy footer link, Terms & Conditions link. |
 | **13** | SEO & Technical Quality | **5** | Google SEO Guidelines | Unique title tags, meta descriptions, heading hierarchy, sitemap. |
-| **14** | Social Presence & Community | **3** | Social Engagement | Active working social media links (Twitter/X, GitHub, LinkedIn). |
+| **14** | Social Presence & Community | **3** | Social Engagement | Active working social media links (LinkedIn, GitHub). |
 | **15** | Overall UX Heuristics | **2** | Nielsen's 10 Heuristics | Zero major usability violations across Nielsen's 10 heuristics. |
 | **TOTAL** | | **100** | | |
 
@@ -82,15 +86,15 @@ When auditing any target URL, the platform runs **5 distinct live scraping passe
 ## 💻 Tech Stack & Local Setup
 
 - **Frontend**: React + Vite, TailwindCSS, Lucide Icons, Canvas Confetti
-- **Backend**: Node.js + Express, Puppeteer / Playwright, WAEF v2.0 Rule Engine
-- **Deployment**: Vercel Serverless
+- **Backend**: Node.js + Express, Cheerio / Fetch, WAEF v2.0 Dynamic Engine
+- **Deployment**: Vercel
 
 ### Local Development Setup
 
 ```bash
 # Clone repository
-git clone https://github.com/Ujjawal07msd/Ujjawal_Groups_Website_Audit.git
-cd "Ujjawal_Groups_Website_Audit"
+git clone https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit.git
+cd "Ujjawal_Group_Website_Audit"
 
 # Install client dependencies
 cd client
@@ -109,4 +113,5 @@ npm start
 
 **Ujjawal Sharma**  
 - **GitHub**: [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)  
+- **LinkedIn**: [https://www.linkedin.com/in/ujjawalsharma0804/](https://www.linkedin.com/in/ujjawalsharma0804/)  
 - **Organization**: Ujjawal Groups  

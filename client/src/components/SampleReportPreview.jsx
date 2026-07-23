@@ -6,9 +6,9 @@ export function SampleReportPreview({ onSelectSample }) {
     {
       name: "Ujjawal Groups Platform",
       url: "https://ujjawal-group-website-audit.vercel.app/",
-      expectedScore: "98.5",
+      expectedScore: "96.5",
       grade: "A+",
-      badge: "WAEF Benchmark (98.5)",
+      badge: "WAEF Benchmark (96.5)",
       color: "border-emerald-500/60 text-emerald-400 bg-emerald-500/10 shadow-lg shadow-emerald-500/10"
     },
     {
@@ -22,15 +22,15 @@ export function SampleReportPreview({ onSelectSample }) {
     {
       name: "IRCTC Next-Gen",
       url: "https://irctc.co.in",
-      expectedScore: "34.0",
-      grade: "F",
-      badge: "Real Case Study",
-      color: "border-rose-500/40 text-rose-400 bg-rose-500/10"
+      expectedScore: "67.5",
+      grade: "C",
+      badge: "Govt Portal",
+      color: "border-amber-500/40 text-amber-300 bg-amber-500/10"
     },
     {
       name: "Stripe SaaS",
       url: "https://stripe.com",
-      expectedScore: "92.5",
+      expectedScore: "96.5",
       grade: "A+",
       badge: "SaaS Leader",
       color: "border-indigo-500/40 text-indigo-400 bg-indigo-500/10"
