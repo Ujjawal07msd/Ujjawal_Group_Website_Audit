@@ -92,7 +92,7 @@ export function JuspayBentoShowcase({ onStartAudit }) {
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-              Enforces 100% image alt text coverage and ARIA landmarks to eliminate penalties and score 98.5 (Grade A+ Industry Benchmark).
+              Enforces 100% image alt text coverage and ARIA landmarks to eliminate penalties and score 96.5 (Grade A+ Industry Benchmark).
             </p>
           </div>
 

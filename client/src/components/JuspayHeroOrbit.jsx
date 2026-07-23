@@ -65,7 +65,7 @@ export function JuspayHeroOrbit({ onOpenVideo, onStartAuditScroll }) {
               {/* Revolving Node 1: 98.5 Score */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-lg bg-slate-900 border border-[#00d294]/50 text-[11px] font-mono text-[#00d294] font-bold shadow-lg flex items-center gap-1">
                 <Award className="h-3 w-3" />
-                <span>98.5 Score</span>
+                <span>96.5 Score</span>
               </div>
 
               {/* Revolving Node 2: 5-Pass Scrape */}
@@ -150,7 +150,7 @@ export function JuspayHeroOrbit({ onOpenVideo, onStartAuditScroll }) {
 
           <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800/60">
             <div className="text-xs text-slate-400 font-mono font-bold uppercase">Benchmark Score</div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-heading mt-1">98.5</div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-heading mt-1">96.5</div>
             <div className="text-[11px] text-emerald-400 font-mono mt-0.5">Grade A+ (Verified)</div>
           </div>
         </div>
