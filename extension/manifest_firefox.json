@@ -25,5 +25,9 @@
       "id": "website-audit-ai@ujjawal-groups.com",
       "strict_min_version": "109.0"
     }
+  },
+  "data_collection_permissions": {
+    "user_data": ["none"],
+    "technical_data": ["none"]
   }
 }
