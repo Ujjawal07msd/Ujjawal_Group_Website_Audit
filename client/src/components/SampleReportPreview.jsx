@@ -52,12 +52,12 @@ export function SampleReportPreview({ onSelectSample }) {
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-3.5 w-full">
         {samples.map((item, idx) => (
           <button
             key={idx}
             onClick={() => onSelectSample(item.url)}
-            className="group flex flex-col justify-between p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-blue-500/60 hover:bg-slate-900 transition-all text-left"
+            className="group flex flex-col justify-between p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-blue-500/60 hover:bg-slate-900 transition-all text-left w-full min-w-0"
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
