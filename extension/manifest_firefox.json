@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Ujjawal Groups Website Audit AI",
   "version": "2.0.0",
   "description": "5-Pass Empirical Website Quality Index (WQI) Audit Engine by Ujjawal Sharma & Ujjawal Groups. 1-click active tab website auditing.",
@@ -12,29 +12,28 @@
     "96": "icons/icon96.png",
     "128": "icons/icon128.png"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
-    "default_title": "Audit Active Website with Ujjawal Groups WAEF v2.0",
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "32": "icons/icon32.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
-    }
+    "default_title": "Audit Active Website with Ujjawal Groups WAEF v2.0"
   },
   "permissions": [
     "activeTab",
-    "storage",
+    "storage"
+  ],
+  "host_permissions": [
     "https://*/*",
     "http://*/*"
   ],
-  "background": {
-    "scripts": ["background.js"]
-  },
   "browser_specific_settings": {
     "gecko": {
       "id": "website-audit-ai@ujjawal-groups.com",
-      "strict_min_version": "58.0"
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": false
+      }
     }
+  },
+  "data_collection_permissions": {
+    "required": false
   }
 }
