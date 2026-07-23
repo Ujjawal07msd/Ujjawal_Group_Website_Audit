@@ -103,6 +103,11 @@ export function Footer({ onOpenPrivacy, onOpenTerms, onOpenVideo }) {
                   GitHub Profile (@Ujjawal07msd) <ExternalLink className="h-3 w-3" />
                 </a>
               </li>
+              <li>
+                <a href="https://www.linkedin.com/in/ujjawalsharma0804/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-1 text-[#0a66c2]">
+                  LinkedIn Profile (Ujjawal Sharma) <ExternalLink className="h-3 w-3" />
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -155,10 +160,14 @@ export function Footer({ onOpenPrivacy, onOpenTerms, onOpenVideo }) {
             <span>&copy; {new Date().getFullYear()} Ujjawal Groups &bull; All Rights Reserved.</span>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-2">
             <span>Engineered with precision by</span>
             <a href="https://github.com/Ujjawal07msd" target="_blank" rel="noreferrer" className="text-slate-300 font-bold hover:text-blue-400 hover:underline">
               Ujjawal Sharma
+            </a>
+            <span>&bull;</span>
+            <a href="https://www.linkedin.com/in/ujjawalsharma0804/" target="_blank" rel="noreferrer" className="text-[#0a66c2] font-bold hover:underline">
+              LinkedIn
             </a>
           </div>
         </div>
