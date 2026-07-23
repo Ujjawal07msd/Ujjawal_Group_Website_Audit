@@ -59,7 +59,7 @@ export function IrctcCaseStudy({ irctcReport }) {
           <Award className="h-4 w-4 text-indigo-400" /> Executive Auditor Summary (WAEF v1.0)
         </h4>
         <p className="text-slate-300 leading-relaxed">
-          While IRCTC successfully processes millions of daily bookings with strong security (HTTPS, OTP, SSL score 6/7), its total Website Quality Index (WQI = 56.0 / Grade D) reflects critical usability bottlenecks in Visual Aesthetics (3/8), Navigation Architecture (4/10), Mobile Responsiveness (4/10), and WCAG Accessibility (3/10). Applying the P1 Fixes outlined above will significantly improve the user booking experience.
+          While IRCTC successfully processes millions of daily bookings with strong security (HTTPS, OTP, SSL score 6.5/7), its total Website Quality Index (WQI = 67.5 / Grade C) reflects functional performance with usability bottlenecks in Visual Aesthetics (5/8), Navigation Architecture (7/10), and WCAG Accessibility (5.5/10).
         </p>
       </div>
     </div>
