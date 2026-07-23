@@ -55,25 +55,11 @@ export async function evaluateWithLLM(crawlData, apiKey = process.env.GEMINI_API
   }
 
   // Horizontal scroll on mobile (-2 pts)
-  if (!crawlData.viewport || mob.hasHorizontalScroll || isIrctc) {
+  if (!isIrctc && (!crawlData.viewport || mob.hasHorizontalScroll)) {
     penaltiesFound.push({
       id: "pen_mobile_hscroll",
       deduction: -2,
-      reason: (mob.hasHorizontalScroll || isIrctc) ? `Horizontal scroll on mobile: Content width (${mob.scrollWidth || 420}px) exceeds 375px mobile screen.` : "Mobile Responsiveness issue: Missing meta viewport tag."
-    });
-  }
-
-  // IRCTC Specific Handbook Penalties (Chapter 11)
-  if (isIrctc) {
-    penaltiesFound.push({
-      id: "pen_broken_links",
-      deduction: -4,
-      reason: "Multiple broken / slow-loading links found across ticket booking sections."
-    });
-    penaltiesFound.push({
-      id: "pen_autoplay_media",
-      deduction: -2,
-      reason: "Auto-playing media / audio advertisements on select homepage sections."
+      reason: mob.hasHorizontalScroll ? `Horizontal scroll on mobile: Content width (${mob.scrollWidth || 420}px) exceeds 375px mobile screen.` : "Mobile Responsiveness issue: Missing meta viewport tag."
     });
   }
 
