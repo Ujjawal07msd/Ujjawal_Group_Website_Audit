@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ShieldCheck, Cpu, ClipboardList, FileCode, Search, ChevronRight, Play, GitCompare, Sparkles, User, LogOut, CheckCircle2 } from "lucide-react";
 import { WafSchemaModal } from "./WafSchemaModal";
 
-export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, currentUser, onOpenAuth, onLogout }) {
+export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, currentUser, onOpenAuth, onLogout, serverStatus = "offline" }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -35,16 +35,29 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
           </button>
 
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <h1 className="font-extrabold text-xl text-white tracking-tight font-heading flex items-center gap-2">
                 Website Audit AI
                 <span className="text-xs px-2.5 py-0.5 font-black rounded-md bg-gradient-to-r from-[#00d294] to-[#06b6d4] text-slate-950 shadow-md font-sans">
                   Ujjawal Groups
                 </span>
               </h1>
-              <span className="hidden sm:inline-block px-2.5 py-0.5 text-[11px] font-semibold rounded-md bg-slate-900 text-[#00d294] border border-emerald-500/30 font-mono">
-                WAEF v2.0 5-Pass
-              </span>
+              
+              {/* Server Status Pill */}
+              {serverStatus === "online" ? (
+                <span className="px-2.5 py-0.5 text-[10px] font-mono font-bold rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Node.js Backend Online
+                </span>
+              ) : (
+                <span
+                  title="Live Node.js crawler server is offline. Running audit engine in instant WAEF v2.0 Client-Side Fallback Mode."
+                  className="px-2.5 py-0.5 text-[10px] font-mono font-bold rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1.5 shadow-sm cursor-help"
+                >
+                  <span className="h-2 w-2 rounded-full bg-amber-400"></span>
+                  Client Engine Active (Offline Mode)
+                </span>
+              )}
             </div>
             
             {/* Breadcrumb Navigation & Intro Video trigger link */}
