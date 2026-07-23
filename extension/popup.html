@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Audit AI — Ujjawal Groups</title>
+  <style>
+    :root {
+      --bg: #030712;
+      --card-bg: #0f172a;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #00d294;
+      --accent-secondary: #06b6d4;
+      --orange: #ff6b00;
+      --border: #1e293b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      width: 420px;
+      min-height: 560px;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .header {
+      padding: 14px 16px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand img {
+      height: 28px;
+      width: auto;
+      border-radius: 6px;
+    }
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .badge {
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      color: #030712;
+      text-transform: uppercase;
+    }
+    .content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .url-display {
+      font-family: monospace;
+      font-size: 12px;
+      color: #38bdf8;
+      background: #020617;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #1e293b;
+      word-break: break-all;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      color: #030712;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 210, 148, 0.2);
+    }
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover {
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .frame-container {
+      width: 100%;
+      height: 440px;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .footer {
+      padding: 10px 16px;
+      background: #020617;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <img src="icons/icon48.png" alt="Ujjawal Groups Logo">
+      <div>
+        <div class="brand-title">Website Audit AI</div>
+        <span class="badge">Ujjawal Groups</span>
+      </div>
+    </div>
+    <span style="font-size: 10px; color: #00d294; font-weight: 700;">● V2.0 Active</span>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <div class="card-title">Current Active Browser Tab</div>
+      <div id="activeUrl" class="url-display">Detecting active website URL...</div>
+      <button id="auditBtn" class="btn-primary">
+        🚀 Audit Current Active Website Now
+      </button>
+    </div>
+
+    <div class="frame-container">
+      <iframe id="auditFrame" src="https://ujjawal-group-website-audit.vercel.app/" title="Ujjawal Groups Website Audit"></iframe>
+    </div>
+
+    <a id="openWebAppBtn" href="https://ujjawal-group-website-audit.vercel.app/" target="_blank" class="btn-secondary">
+      🌐 Open Full Web Application in New Tab &rarr;
+    </a>
+  </div>
+
+  <div class="footer">
+    <span>© 2026 Ujjawal Sharma & Ujjawal Groups</span>
+    <a href="https://github.com/Ujjawal07msd" target="_blank">GitHub Profile</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
