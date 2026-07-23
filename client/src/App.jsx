@@ -136,10 +136,8 @@ export default function App() {
         const domain = new URL(cleanUrl).hostname;
         const isHttps = cleanUrl.startsWith("https:");
         const isIrctc = domain.includes("irctc");
-        const isGoogle = domain.includes("google");
-        const isStripe = domain.includes("stripe");
 
-        const fallbackReport = generateFallbackReport(cleanUrl, domain, isHttps, isIrctc, isGoogle, isStripe);
+        const fallbackReport = generateFallbackReport(cleanUrl, domain, isHttps, isIrctc);
         setAuditReport(fallbackReport);
         incrementAuditCount();
 
@@ -163,70 +161,52 @@ export default function App() {
       const domA = new URL(cleanA).hostname;
       const domB = new URL(cleanB).hostname;
 
-      const reportA = generateFallbackReport(cleanA, domA, true, domA.includes("irctc"), domA.includes("google"), domA.includes("stripe"));
-      const reportB = generateFallbackReport(cleanB, domB, true, domB.includes("irctc"), domB.includes("google"), domB.includes("stripe"));
+      const reportA = generateFallbackReport(cleanA, domA, cleanA.startsWith("https:"), domA.includes("irctc"));
+      const reportB = generateFallbackReport(cleanB, domB, cleanB.startsWith("https:"), domB.includes("irctc"));
 
       setCompareData({ reportA, reportB });
     }, 2000);
   };
 
-  // Client-Side Dynamic Audit Evaluation Engine matching 25-Page WAEF v2.0 Handbook
-  const generateFallbackReport = (url, domain, isHttps, isIrctc, isGoogle, isStripe) => {
+  // Client-Side Fallback Generator matching Handbook Specification
+  const generateFallbackReport = (url, domain, isHttps, isIrctc) => {
     const isLocalhost = domain.includes("localhost") || domain.includes("127.0.0.1");
 
-    // Itemized 15-Parameter WAEF Handbook Evaluation (Sum = 100 Marks)
-    const parameters = [
-      { id: 1, name: "Brand Identity & Consistency", weight: 5, parameterScore: isIrctc ? 3.0 : (isGoogle ? 4.8 : (isStripe ? 4.9 : 4.5)), standard: "Brand Guidelines", description: "Evaluates logo visibility, color consistency, value proposition clarity, and CTAs." },
-      { id: 2, name: "Visual Design & Aesthetics", weight: 8, parameterScore: isIrctc ? 3.0 : (isGoogle ? 7.5 : (isStripe ? 7.8 : 7.2)), standard: "Visual Design Laws", description: "Evaluates white space, visual hierarchy (H1 -> H2 -> H3), grid layout, and icon style." },
-      { id: 3, name: "Navigation & Information Architecture", weight: 10, parameterScore: isIrctc ? 4.0 : (isGoogle ? 9.5 : (isStripe ? 9.6 : 9.0)), standard: "Jakob's Law", description: "Evaluates main menu, 3-click rule reachability, search bar placement, and footer navigation." },
-      { id: 4, name: "Homepage First Impression", weight: 7, parameterScore: isIrctc ? 3.0 : (isGoogle ? 6.8 : (isStripe ? 6.9 : 6.5)), standard: "3-Second Rule", description: "Evaluates 3-second website purpose clarity, primary CTA above fold, and clutter control." },
-      { id: 5, name: "Typography & Readability", weight: 5, parameterScore: isIrctc ? 3.0 : (isGoogle ? 4.8 : (isStripe ? 4.9 : 4.5)), standard: "WCAG Readability", description: "Evaluates font size readability, heading scale, line leading, and body contrast." },
-      { id: 6, name: "Accessibility", weight: 10, parameterScore: isIrctc ? 3.0 : (isGoogle ? 9.2 : (isStripe ? 9.0 : 8.5)), standard: "WCAG 2.2 Level AA", description: "Evaluates contrast ratio (>= 4.5:1), keyboard focus, image alt text coverage ratio." },
-      { id: 7, name: "Mobile Responsiveness", weight: 10, parameterScore: isIrctc ? 4.0 : (isGoogle ? 9.5 : (isStripe ? 9.8 : 9.0)), standard: "Google Mobile-Friendly", description: "Evaluates meta viewport scaling, touch targets (>= 48x48px), and mobile horizontal scroll." },
-      { id: 8, name: "Performance & Speed", weight: 10, parameterScore: isIrctc ? 3.0 : (isGoogle ? 9.4 : (isStripe ? 9.2 : 8.5)), standard: "Core Web Vitals", description: "Evaluates Lighthouse performance, LCP (<= 2.5s), CLS (<= 0.1), and INP (<= 200ms)." },
-      { id: 9, name: "Content Quality", weight: 8, parameterScore: isIrctc ? 5.0 : (isGoogle ? 7.8 : (isStripe ? 7.9 : 7.5)), standard: "Content UX", description: "Evaluates content clarity, audience relevance, grammatical accuracy, and current info." },
-      { id: 10, name: "Search & Findability", weight: 5, parameterScore: isIrctc ? 3.0 : (isGoogle ? 5.0 : (isStripe ? 4.8 : 4.5)), standard: "IR Principles", description: "Evaluates search bar location, accuracy, search filters, and latency (< 1s)." },
-      { id: 11, name: "Forms & User Interaction", weight: 5, parameterScore: isIrctc ? 2.0 : (isGoogle ? 4.8 : (isStripe ? 4.9 : 4.5)), standard: "Baymard Institute", description: "Evaluates form field simplicity, inline validation, and submission clarity." },
-      { id: 12, name: "Security & Trust", weight: 7, parameterScore: isIrctc ? 5.0 : (isGoogle ? 7.0 : (isStripe ? 7.0 : 6.5)), standard: "OWASP Top 10 / HTTPS", description: "Evaluates HTTPS SSL status, Privacy Policy footer link, and Terms link." },
-      { id: 13, name: "SEO & Technical Quality", weight: 5, parameterScore: isIrctc ? 3.0 : (isGoogle ? 5.0 : (isStripe ? 4.9 : 4.5)), standard: "Google SEO", description: "Evaluates unique title tags, meta descriptions, heading hierarchy, and sitemaps." },
-      { id: 14, name: "Social Presence & Community", weight: 3, parameterScore: isIrctc ? 2.0 : (isGoogle ? 2.8 : (isStripe ? 2.9 : 2.5)), standard: "Social Engagement", description: "Evaluates active working social media links." },
-      { id: 15, name: "Overall UX Heuristics", weight: 2, parameterScore: isIrctc ? 1.0 : (isGoogle ? 1.9 : (isStripe ? 2.0 : 1.8)), standard: "Nielsen's 10 Laws", description: "Evaluates compliance across Nielsen's 10 Usability Heuristics." }
-    ];
-
-    // Penalty Deductions Array (Capped at -20 Points per WAEF Chapter 7)
+    let rawWqi = 87.5;
+    let totalPenalties = 0;
     const penalties = [];
 
     if (!isHttps && !isLocalhost) {
       penalties.push({ id: "pen_missing_https", deduction: -10, reason: "Missing HTTPS / Invalid SSL certificate on production domain." });
+      totalPenalties += 10;
     }
 
     if (isIrctc) {
+      rawWqi = 47.0;
+      totalPenalties = 13;
       penalties.push(
         { id: "pen_mobile_hscroll", deduction: -2, reason: "Horizontal scroll on mobile: Content width (379px) exceeds 375px mobile screen." },
         { id: "pen_broken_links", deduction: -4, reason: "Multiple broken / slow-loading links found across ticket booking sections." },
         { id: "pen_autoplay_media", deduction: -2, reason: "Auto-playing media / audio advertisements on select homepage sections." },
         { id: "pen_major_wcag_a", deduction: -5, reason: "Major accessibility failure (WCAG Level A): Missing alt text on booking icons." }
       );
-    } else if (!isGoogle && !isStripe) {
+    } else {
       penalties.push({ id: "pen_major_wcag_a", deduction: -5, reason: "Major accessibility failure (WCAG Level A): Image alt text coverage gap." });
+      totalPenalties += 5;
     }
 
-    // Mathematical WQI Computations
-    const rawWqi = Math.round(parameters.reduce((sum, p) => sum + p.parameterScore, 0) * 10) / 10;
-    const uncappedPenaltySum = penalties.reduce((sum, pen) => sum + Math.abs(pen.deduction), 0);
-    const totalPenalties = Math.min(20, uncappedPenaltySum);
     const finalWqi = Math.max(0, Math.round((rawWqi - totalPenalties) * 10) / 10);
     
     let grade = "A";
     let interpretation = "Very Good";
     let action = "Minor tweaks only";
-    let gradeColor = "#00d294";
+    let gradeColor = "#3b82f6";
 
-    if (finalWqi >= 90) { grade = "A+"; interpretation = "Excellent / Industry Benchmark"; action = "Maintain & iterate"; gradeColor = "#00d294"; }
-    else if (finalWqi >= 80) { grade = "A"; interpretation = "Very Good"; action = "Minor tweaks only"; gradeColor = "#06b6d4"; }
-    else if (finalWqi >= 70) { grade = "B"; interpretation = "Good"; action = "Address P2 priority issues"; gradeColor = "#38bdf8"; }
+    if (finalWqi >= 90) { grade = "A+"; interpretation = "Excellent / Industry Benchmark"; action = "Maintain & iterate"; gradeColor = "#10b981"; }
+    else if (finalWqi >= 80) { grade = "A"; interpretation = "Very Good"; action = "Minor tweaks only"; gradeColor = "#3b82f6"; }
+    else if (finalWqi >= 70) { grade = "B"; interpretation = "Good"; action = "Address P2 priority issues"; gradeColor = "#6366f1"; }
     else if (finalWqi >= 60) { grade = "C"; interpretation = "Average"; action = "Significant UX improvements needed"; gradeColor = "#f59e0b"; }
-    else if (finalWqi >= 50) { grade = "D"; interpretation = "Needs Improvement"; action = "Redesign key sections"; gradeColor = "#ff6b00"; }
+    else if (finalWqi >= 50) { grade = "D"; interpretation = "Needs Improvement"; action = "Redesign key sections"; gradeColor = "#f97316"; }
     else { grade = "F"; interpretation = "Major Redesign Required"; action = "Full audit & rebuild required"; gradeColor = "#ef4444"; }
 
     return {
@@ -250,30 +230,46 @@ export default function App() {
         domain,
         isHttps,
         statusCode: 200,
-        responseTimeMs: isIrctc ? 1685 : (isGoogle ? 140 : 380),
-        latencySamples: isIrctc ? [2392, 4996, 71, 13, 952] : [120, 110, 105, 98, 115],
+        responseTimeMs: isIrctc ? 1685 : 450,
+        latencySamples: isIrctc ? [2392, 4996, 71, 13, 952] : [650, 420, 310, 290, 580],
         passCount: 5,
         title: isIrctc ? "IRCTC Next Generation Quantitative Ticket Booking" : `${domain} Official Site`,
         metaDescription: `Audit for ${domain} under WAEF v2.0 handbook by Ujjawal Sharma & Ujjawal Groups.`,
         viewport: "width=device-width, initial-scale=1.0",
-        domElementsCount: isIrctc ? 868 : 420,
+        domElementsCount: isIrctc ? 868 : 450,
         h1Count: 1,
-        imagesTotal: isIrctc ? 45 : 14,
-        missingAltCount: isIrctc ? 38 : (isGoogle ? 0 : 4),
-        linksTotal: isIrctc ? 120 : 32,
+        imagesTotal: isIrctc ? 45 : 16,
+        missingAltCount: isIrctc ? 38 : 12,
+        linksTotal: isIrctc ? 120 : 28,
         formsCount: isIrctc ? 4 : 1,
         hasSearchInput: true,
         hasPrivacyPolicy: true,
         hasTerms: true,
-        hasCookieBanner: true,
+        hasCookieBanner: false,
         mobileAudit: {
           hasViewport: true,
           hasHorizontalScroll: isIrctc,
-          smallTouchTargetsCount: isIrctc ? 12 : 0,
+          smallTouchTargetsCount: isIrctc ? 12 : 2,
           scrollWidth: isIrctc ? 379 : 375
         }
       },
-      parameters,
+      parameters: [
+        { id: 1, name: "Brand Identity & Consistency", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "Brand Guidelines", description: "Evaluates logo visibility, color consistency, value proposition clarity, and CTAs." },
+        { id: 2, name: "Visual Design & Aesthetics", weight: 8, parameterScore: isIrctc ? 3.0 : 7.0, standard: "Visual Design Laws", description: "Evaluates white space, visual hierarchy (H1 -> H2 -> H3), grid layout, and icon style." },
+        { id: 3, name: "Navigation & Information Architecture", weight: 10, parameterScore: isIrctc ? 4.0 : 9.0, standard: "Jakob's Law", description: "Evaluates main menu, 3-click rule reachability, search bar placement, and footer navigation." },
+        { id: 4, name: "Homepage First Impression", weight: 7, parameterScore: isIrctc ? 3.0 : 6.5, standard: "3-Second Rule", description: "Evaluates 3-second website purpose clarity, primary CTA above fold, and clutter control." },
+        { id: 5, name: "Typography & Readability", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "WCAG Readability", description: "Evaluates font size readability, heading scale, line leading, and body contrast." },
+        { id: 6, name: "Accessibility", weight: 10, parameterScore: isIrctc ? 3.0 : 8.5, standard: "WCAG 2.2 Level AA", description: "Evaluates contrast ratio (>= 4.5:1), keyboard focus, image alt text coverage ratio." },
+        { id: 7, name: "Mobile Responsiveness", weight: 10, parameterScore: isIrctc ? 4.0 : 9.0, standard: "Google Mobile-Friendly", description: "Evaluates meta viewport scaling, touch targets (>= 48x48px), and mobile horizontal scroll." },
+        { id: 8, name: "Performance & Speed", weight: 10, parameterScore: isIrctc ? 3.0 : 8.5, standard: "Core Web Vitals", description: "Evaluates Lighthouse performance, LCP (<= 2.5s), CLS (<= 0.1), and INP (<= 200ms)." },
+        { id: 9, name: "Content Quality", weight: 8, parameterScore: isIrctc ? 5.0 : 7.5, standard: "Content UX", description: "Evaluates content clarity, audience relevance, grammatical accuracy, and current info." },
+        { id: 10, name: "Search & Findability", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "IR Principles", description: "Evaluates search bar location, accuracy, search filters, and latency (< 1s)." },
+        { id: 11, name: "Forms & User Interaction", weight: 5, parameterScore: isIrctc ? 2.0 : 4.5, standard: "Baymard Institute", description: "Evaluates form field simplicity, inline validation, and submission clarity." },
+        { id: 12, name: "Security & Trust", weight: 7, parameterScore: isIrctc ? 5.0 : 6.5, standard: "OWASP Top 10 / HTTPS", description: "Evaluates HTTPS SSL status, Privacy Policy footer link, and Terms link." },
+        { id: 13, name: "SEO & Technical Quality", weight: 5, parameterScore: isIrctc ? 3.0 : 4.5, standard: "Google SEO", description: "Evaluates unique title tags, meta descriptions, heading hierarchy, and sitemaps." },
+        { id: 14, name: "Social Presence & Community", weight: 3, parameterScore: isIrctc ? 2.0 : 2.5, standard: "Social Engagement", description: "Evaluates active working social media links and community proof." },
+        { id: 15, name: "Overall UX Heuristics", weight: 2, parameterScore: isIrctc ? 1.0 : 2.0, standard: "Nielsen's 10 Laws", description: "Evaluates compliance across Nielsen's 10 Usability Heuristics." }
+      ],
       penalties,
       decisionMatrix: [
         { priority: "P1 — Fix Now", parameter: "Accessibility", issue: "Missing alt text on key images & icons.", impact: "High" },
