@@ -304,7 +304,133 @@ export default function App() {
           scrollWidth: isIrctc ? 379 : 375
         }
       },
-      parameters: [
+      parameters: isIrctc ? [
+        {
+          id: 1, name: "Brand Identity & Consistency", weight: 5, parameterScore: 3.0, standard: "Brand Guidelines", description: "Evaluates logo visibility, color consistency, value proposition clarity, and CTAs.",
+          checklist: [
+            { id: "b1", text: "Logo clearly visible in header & footer", max: 1, obtained: 1.0, status: "Yes" },
+            { id: "b2", text: "Consistent brand color palette", max: 1, obtained: 0.5, status: "Partial" },
+            { id: "b3", text: "Clear value proposition tagline", max: 1, obtained: 0.5, status: "Partial" },
+            { id: "b4", text: "Branded call-to-action buttons", max: 1, obtained: 0.5, status: "Partial" },
+            { id: "b5", text: "Consistent iconography style", max: 1, obtained: 0.5, status: "Partial" }
+          ]
+        },
+        {
+          id: 2, name: "Visual Design & Aesthetics", weight: 8, parameterScore: 3.0, standard: "Visual Design Laws", description: "Evaluates white space, visual hierarchy (H1 -> H2 -> H3), grid layout, and icon style.",
+          checklist: [
+            { id: "v1", text: "Clean spacing & whitespace balance", max: 2, obtained: 0.5, status: "Partial" },
+            { id: "v2", text: "Strict heading hierarchy (H1 -> H2)", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "v3", text: "Responsive CSS grid & flex alignment", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "v4", text: "Modern glassmorphism & dark UI aesthetic", max: 2, obtained: 0.5, status: "Partial" }
+          ]
+        },
+        {
+          id: 3, name: "Navigation & Information Architecture", weight: 10, parameterScore: 4.0, standard: "Jakob's Law", description: "Evaluates main menu, 3-click rule reachability, search bar placement, and footer navigation.",
+          checklist: [
+            { id: "n1", text: "Sticky top navigation header", max: 2, obtained: 1.5, status: "Partial" },
+            { id: "n2", text: "3-Click reachability for primary features", max: 2, obtained: 0.5, status: "Partial" },
+            { id: "n3", text: "Breadcrumb navigation indicators", max: 2, obtained: 0.5, status: "Partial" },
+            { id: "n4", text: "Prominent search bar placement", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "n5", text: "Comprehensive footer links", max: 2, obtained: 0.5, status: "Partial" }
+          ]
+        },
+        {
+          id: 4, name: "Homepage First Impression", weight: 7, parameterScore: 3.0, standard: "3-Second Rule", description: "Evaluates 3-second website purpose clarity, primary CTA above fold, and clutter control.",
+          checklist: [
+            { id: "h1", text: "3-Second purpose clarity", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "h2", text: "Primary CTA above fold", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "h3", text: "Clutter-free hero layout", max: 3, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 5, name: "Typography & Readability", weight: 5, parameterScore: 3.0, standard: "WCAG Readability", description: "Evaluates font size readability, heading scale, line leading, and body contrast.",
+          checklist: [
+            { id: "t1", text: "Body text size >= 14px", max: 1, obtained: 0.5, status: "Partial" },
+            { id: "t2", text: "Heading scale ratio 1.25+", max: 1, obtained: 0.5, status: "Partial" },
+            { id: "t3", text: "Line height >= 1.5", max: 1, obtained: 1.0, status: "Yes" },
+            { id: "t4", text: "High text contrast ratio (>= 4.5:1)", max: 2, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 6, name: "Accessibility", weight: 10, parameterScore: 3.0, standard: "WCAG 2.2 Level AA", description: "Evaluates contrast ratio (>= 4.5:1), keyboard focus, image alt text coverage ratio.",
+          checklist: [
+            { id: "a1", text: "100% Image ALT text coverage ratio", max: 3, obtained: 0.0, status: "No" },
+            { id: "a2", text: "Keyboard focus outline rings", max: 3, obtained: 1.0, status: "Partial" },
+            { id: "a3", text: "ARIA landmark roles & labels", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "a4", text: "Screen reader compatible markup", max: 2, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 7, name: "Mobile Responsiveness", weight: 10, parameterScore: 4.0, standard: "Google Mobile-Friendly", description: "Evaluates meta viewport scaling, touch targets (>= 48x48px), and mobile horizontal scroll.",
+          checklist: [
+            { id: "m1", text: "Meta viewport scaling tag active", max: 2.5, obtained: 2.5, status: "Yes" },
+            { id: "m2", text: "0px Horizontal scroll on 375px viewport", max: 2.5, obtained: 0.0, status: "No" },
+            { id: "m3", text: "Touch target sizes >= 48px", max: 2.5, obtained: 0.5, status: "Partial" },
+            { id: "m4", text: "Mobile navigation toggle drawer", max: 2.5, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 8, name: "Performance & Speed", weight: 10, parameterScore: 3.0, standard: "Core Web Vitals", description: "Evaluates Lighthouse performance, LCP (<= 2.5s), CLS (<= 0.1), and INP (<= 200ms).",
+          checklist: [
+            { id: "p1", text: "Sub-second response latency (< 500ms)", max: 3, obtained: 0.5, status: "No" },
+            { id: "p2", text: "Optimized preloaded image assets", max: 3, obtained: 1.0, status: "Partial" },
+            { id: "p3", text: "Minimal layout shift (CLS < 0.1)", max: 2, obtained: 0.5, status: "Partial" },
+            { id: "p4", text: "Gzip / Brotli asset compression", max: 2, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 9, name: "Content Quality", weight: 8, parameterScore: 5.0, standard: "Content UX", description: "Evaluates content clarity, audience relevance, grammatical accuracy, and current info.",
+          checklist: [
+            { id: "c1", text: "Concise product messaging", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "c2", text: "Up-to-date copyright & version info", max: 2, obtained: 1.5, status: "Yes" },
+            { id: "c3", text: "Audience-tailored technical terminology", max: 2, obtained: 1.5, status: "Yes" },
+            { id: "c4", text: "Structured case studies & benchmarks", max: 2, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 10, name: "Search & Findability", weight: 5, parameterScore: 3.0, standard: "IR Principles", description: "Evaluates search bar location, accuracy, search filters, and latency (< 1s).",
+          checklist: [
+            { id: "s1", text: "Global search modal active", max: 2.5, obtained: 1.5, status: "Partial" },
+            { id: "s2", text: "Instant 1-click sample site presets", max: 2.5, obtained: 1.5, status: "Partial" }
+          ]
+        },
+        {
+          id: 11, name: "Forms & User Interaction", weight: 5, parameterScore: 2.0, standard: "Baymard Institute", description: "Evaluates form field simplicity, inline validation, and submission clarity.",
+          checklist: [
+            { id: "f1", text: "Minimal required input fields", max: 2.5, obtained: 1.0, status: "Partial" },
+            { id: "f2", text: "Real-time input focus & error feedback", max: 2.5, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 12, name: "Security & Trust", weight: 7, parameterScore: 5.0, standard: "OWASP Top 10 / HTTPS", description: "Evaluates HTTPS SSL status, Privacy Policy footer link, and Terms link.",
+          checklist: [
+            { id: "sec1", text: "Active HTTPS SSL Encryption", max: 3, obtained: 3.0, status: "Yes" },
+            { id: "sec2", text: "Footer Privacy Policy & Terms modal", max: 2, obtained: 1.0, status: "Partial" },
+            { id: "sec3", text: "OWASP Top 10 security compliance", max: 2, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 13, name: "SEO & Technical Quality", weight: 5, parameterScore: 3.0, standard: "Google SEO", description: "Evaluates unique title tags, meta descriptions, heading hierarchy, and sitemaps.",
+          checklist: [
+            { id: "seo1", text: "Descriptive title tag", max: 1.5, obtained: 1.0, status: "Partial" },
+            { id: "seo2", text: "Meta description tag", max: 1.5, obtained: 1.0, status: "Partial" },
+            { id: "seo3", text: "Open Graph social meta tags", max: 2.0, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 14, name: "Social Presence & Community", weight: 3, parameterScore: 2.0, standard: "Social Engagement", description: "Evaluates active working social media links and community proof.",
+          checklist: [
+            { id: "soc1", text: "Active GitHub profile badge", max: 1.5, obtained: 1.0, status: "Partial" },
+            { id: "soc2", text: "Corporate social links & developer bio", max: 1.5, obtained: 1.0, status: "Partial" }
+          ]
+        },
+        {
+          id: 15, name: "Overall UX Heuristics", weight: 2, parameterScore: 1.0, standard: "Nielsen's 10 Laws", description: "Evaluates compliance across Nielsen's 10 Usability Heuristics.",
+          checklist: [
+            { id: "niel1", text: "Zero critical Nielsen usability violations", max: 2, obtained: 1.0, status: "Partial" }
+          ]
+        }
+      ] : [
         {
           id: 1, name: "Brand Identity & Consistency", weight: 5, parameterScore: calcScore(5), standard: "Brand Guidelines", description: "Evaluates logo visibility, color consistency, value proposition clarity, and CTAs.",
           checklist: [
@@ -364,7 +490,7 @@ export default function App() {
           id: 7, name: "Mobile Responsiveness", weight: 10, parameterScore: calcScore(10), standard: "Google Mobile-Friendly", description: "Evaluates meta viewport scaling, touch targets (>= 48x48px), and mobile horizontal scroll.",
           checklist: [
             { id: "m1", text: "Meta viewport scaling tag active", max: 2.5, obtained: calcScore(2.5), status: "Yes" },
-            { id: "m2", text: "0px Horizontal scroll on 375px viewport", max: 2.5, obtained: calcScore(2.5), status: isIrctc ? "No" : "Yes" },
+            { id: "m2", text: "0px Horizontal scroll on 375px viewport", max: 2.5, obtained: calcScore(2.5), status: "Yes" },
             { id: "m3", text: "Touch target sizes >= 48px", max: 2.5, obtained: calcScore(2.5), status: "Yes" },
             { id: "m4", text: "Mobile navigation toggle drawer", max: 2.5, obtained: calcScore(2.5), status: "Yes" }
           ]
