@@ -27,7 +27,8 @@
     }
   },
   "data_collection_permissions": {
-    "user_data": ["none"],
-    "technical_data": ["none"]
+    "required": [],
+    "optional": [],
+    "none": true
   }
 }
