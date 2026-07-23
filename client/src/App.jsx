@@ -18,6 +18,7 @@ import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
 import { DetailedComparisonView } from "./components/DetailedComparisonView";
 import { AuthModal } from "./components/AuthModal";
 import { ProductRoadmapModal } from "./components/ProductRoadmapModal";
+import { WqiRadarChart } from "./components/WqiRadarChart";
 import { Footer } from "./components/Footer";
 import { generateDetailedPdfReport, generateComparativePdfReport } from "./utils/pdfGenerator";
 import { Download, AlertTriangle, ShieldCheck, FileText, Lock, Globe, Share2, X, Sparkles, Check, ArrowRight } from "lucide-react";
@@ -563,6 +564,7 @@ export default function App() {
 
                 <WqiGauge report={auditReport} />
                 <ScoreSummaryCard summary={auditReport.crawlSummary} />
+                <WqiRadarChart report={auditReport} />
                 <ParameterBreakdown parameters={auditReport.parameters} />
                 <PenaltyTracker penalties={auditReport.penalties} totalPenalties={auditReport.scores.totalPenalties} />
                 <DecisionMatrix matrix={auditReport.decisionMatrix} />
