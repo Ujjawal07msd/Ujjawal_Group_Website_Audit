@@ -4,7 +4,7 @@ import { ShieldCheck, ChevronDown, Mail, Globe, Lock, FileText, ExternalLink, Aw
 export function Footer({ onOpenPrivacy, onOpenTerms, onOpenVideo }) {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-  const parentLogo = "/assets/Ujjawal Groups Parent logo.jpg";
+  const parentLogo = "/assets/Ujjawal Groups Parent logo.png";
   const logoPng = "/assets/Ujjawal Groups Website Audit logo.png";
 
   const faqs = [

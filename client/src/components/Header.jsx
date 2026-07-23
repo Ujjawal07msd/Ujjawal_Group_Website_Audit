@@ -17,7 +17,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
           <button
             onClick={onOpenVideo}
             title="Click to play Ujjawal Groups intro animation video"
-            className="relative group cursor-pointer flex items-center justify-center rounded-xl p-1 bg-slate-900 border border-slate-700/80 hover:border-blue-500/80 transition-all hover:scale-105"
+            className="relative group cursor-pointer flex items-center justify-center rounded-xl p-1 bg-slate-900 border border-slate-700/80 hover:border-[#00d294] transition-all hover:scale-105"
           >
             <img
               src={logoPng}
@@ -29,7 +29,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
               }}
             />
             {/* Play Badge Overlay */}
-            <div className="absolute -bottom-1 -right-1 bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:from-blue-500 group-hover:to-indigo-500 text-white rounded-full p-1 shadow-lg shadow-blue-500/50 flex items-center justify-center">
+            <div className="absolute -bottom-1 -right-1 bg-[#ff6b00] hover:bg-[#e05e00] text-white rounded-full p-1 shadow-lg shadow-orange-500/50 flex items-center justify-center">
               <Play className="h-3 w-3 fill-current ml-0.5" />
             </div>
           </button>
@@ -38,11 +38,11 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             <div className="flex items-center gap-2">
               <h1 className="font-extrabold text-xl text-white tracking-tight font-heading flex items-center gap-2">
                 Website Audit AI
-                <span className="text-xs px-2.5 py-0.5 font-bold rounded-md bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md font-sans">
+                <span className="text-xs px-2.5 py-0.5 font-black rounded-md bg-gradient-to-r from-[#00d294] to-[#06b6d4] text-slate-950 shadow-md font-sans">
                   Ujjawal Groups
                 </span>
               </h1>
-              <span className="hidden sm:inline-block px-2.5 py-0.5 text-[11px] font-semibold rounded-md bg-slate-900 text-blue-400 border border-blue-900/50 font-mono">
+              <span className="hidden sm:inline-block px-2.5 py-0.5 text-[11px] font-semibold rounded-md bg-slate-900 text-[#00d294] border border-emerald-500/30 font-mono">
                 WAEF v2.0 5-Pass
               </span>
             </div>
@@ -53,7 +53,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
               <ChevronRight className="h-3 w-3 text-slate-600" />
               <button
                 onClick={onOpenVideo}
-                className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 hover:underline"
+                className="text-[#00d294] hover:text-emerald-300 font-semibold flex items-center gap-1 hover:underline"
               >
                 <Sparkles className="h-3 w-3 text-amber-400 animate-pulse" />
                 Ujjawal Groups Intro
@@ -72,7 +72,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search WAEF parameters or rules..."
             aria-label="Search WAEF audit parameters"
-            className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-950/90 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all font-mono"
+            className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-950/90 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[#00d294] transition-all font-mono"
           />
         </div>
 
@@ -83,7 +83,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             aria-label="Live AI Audit Tab"
             className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
               activeTab === "audit"
-                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/30"
+                ? "bg-gradient-to-r from-[#00d294] to-[#06b6d4] text-slate-950 shadow-md shadow-emerald-500/20"
                 : "text-slate-400 hover:text-white hover:bg-slate-800"
             }`}
           >
@@ -96,7 +96,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             aria-label="Blank Audit Sheet Tab"
             className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
               activeTab === "manual"
-                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/30"
+                ? "bg-gradient-to-r from-[#00d294] to-[#06b6d4] text-slate-950 shadow-md shadow-emerald-500/20"
                 : "text-slate-400 hover:text-white hover:bg-slate-800"
             }`}
           >
@@ -109,11 +109,11 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             aria-label="Compare Websites Mode"
             className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all ${
               activeTab === "compare"
-                ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-600/30"
+                ? "bg-[#ff6b00] text-white shadow-md shadow-orange-500/30"
                 : "text-slate-400 hover:text-white hover:bg-slate-800"
             }`}
           >
-            <GitCompare className="h-3.5 w-3.5 text-indigo-300" />
+            <GitCompare className="h-3.5 w-3.5 text-amber-300" />
             Compare URLs
           </button>
         </nav>
@@ -125,9 +125,9 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             <div className="relative">
               <button
                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-white hover:border-blue-500 transition-all text-xs font-bold"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-white hover:border-[#00d294] transition-all text-xs font-bold"
               >
-                <div className="h-6 w-6 rounded-lg bg-blue-600 flex items-center justify-center text-white text-[10px] font-mono">
+                <div className="h-6 w-6 rounded-lg bg-[#00d294] flex items-center justify-center text-slate-950 font-bold text-[10px] font-mono">
                   US
                 </div>
                 <span className="hidden sm:inline-block">{currentUser.name}</span>
@@ -151,7 +151,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
           ) : (
             <button
               onClick={onOpenAuth}
-              className="px-3.5 py-1.5 text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white rounded-xl shadow-lg shadow-blue-600/30 flex items-center gap-1.5 transition-all"
+              className="px-3.5 py-1.5 text-xs font-bold bg-[#ff6b00] hover:bg-[#e05e00] text-white rounded-xl shadow-lg shadow-orange-500/30 flex items-center gap-1.5 transition-all"
             >
               <User className="h-3.5 w-3.5" />
               <span>Sign In / Sign Up</span>
@@ -164,7 +164,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             target="_blank"
             rel="noopener noreferrer"
             title="Visit Ujjawal Sharma's GitHub Profile (Ujjawal07msd)"
-            className="p-2 text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-xl transition-all flex items-center justify-center shadow-sm"
+            className="p-2 text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-[#00d294] rounded-xl transition-all flex items-center justify-center shadow-sm"
           >
             <svg className="h-4 w-4 fill-current text-slate-300 hover:text-white" viewBox="0 0 24 24">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
@@ -176,7 +176,7 @@ export function Header({ activeTab, setActiveTab, onOpenVideo, onOpenCompare, cu
             aria-label="Open Handbook Schema Modal"
             className="px-3 py-1.5 text-xs font-semibold bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white rounded-xl flex items-center gap-1.5 transition-all"
           >
-            <FileCode className="h-3.5 w-3.5 text-blue-400" />
+            <FileCode className="h-3.5 w-3.5 text-[#00d294]" />
             Handbook Schema
           </button>
         </div>

@@ -2,13 +2,13 @@ import React from "react";
 import { ShieldCheck, Award, CheckCircle2, Star, Users, Zap, ExternalLink, Lock } from "lucide-react";
 
 export function TrustBar({ auditCount = 100 }) {
-  const parentLogo = "/assets/Ujjawal Groups Parent logo.jpg";
+  const parentLogo = "/assets/Ujjawal Groups Parent logo.png";
 
   const stats = [
-    { label: "Websites Audited", value: `${auditCount}+`, icon: Zap, color: "text-blue-400" },
-    { label: "WAEF Parameters", value: "15 Standards", icon: ShieldCheck, color: "text-emerald-400" },
+    { label: "Websites Audited", value: `${auditCount}+`, icon: Zap, color: "text-[#ff6b00]" },
+    { label: "WAEF Parameters", value: "15 Standards", icon: ShieldCheck, color: "text-[#00d294]" },
     { label: "Audit Accuracy", value: "99.8%", icon: Award, color: "text-amber-400" },
-    { label: "Avg Audit Speed", value: "3.2 Seconds", icon: CheckCircle2, color: "text-indigo-400" }
+    { label: "Avg Audit Speed", value: "3.2 Seconds", icon: CheckCircle2, color: "text-[#06b6d4]" }
   ];
 
   const testimonials = [

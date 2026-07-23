@@ -20,9 +20,9 @@ export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
   ];
 
   return (
-    <div className="glass-panel p-8 md:p-10 mb-8 text-center max-w-5xl mx-auto">
+    <div className="glass-panel p-8 md:p-10 mb-8 text-center max-w-5xl mx-auto border-[#00d294]/20">
       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold mb-4">
-        <Shield className="h-3.5 w-3.5 text-blue-400" /> WAEF v1.0 Enterprise Audit Engine
+        <Shield className="h-3.5 w-3.5 text-[#00d294]" /> WAEF v2.0 Enterprise Audit Engine
       </div>
 
       <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3 font-heading">
@@ -44,14 +44,14 @@ export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Enter website URL (e.g. https://stripe.com)"
             disabled={isLoading}
-            className="w-full pl-12 pr-4 py-3.5 bg-slate-950 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 text-sm font-medium transition-all"
+            className="w-full pl-12 pr-4 py-3.5 bg-slate-950 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[#00d294] text-sm font-medium transition-all"
           />
         </div>
 
         <button
           type="submit"
           disabled={isLoading}
-          className="px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-md flex items-center justify-center gap-2 text-sm transition-all disabled:opacity-50 shrink-0"
+          className="px-8 py-3.5 bg-[#ff6b00] hover:bg-[#e05e00] text-white font-extrabold rounded-xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 text-sm transition-all disabled:opacity-50 shrink-0"
         >
           {isLoading ? (
             <>
@@ -70,7 +70,7 @@ export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
       {/* Preset Buttons */}
       <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
         <span className="font-semibold text-slate-500 mr-1 flex items-center gap-1">
-          <Compass className="h-3.5 w-3.5" /> Sample Websites:
+          <Compass className="h-3.5 w-3.5 text-[#00d294]" /> Sample Websites:
         </span>
         {sampleSites.map((site) => (
           <button
@@ -81,10 +81,10 @@ export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
               onStartAudit(site.url, apiKey.trim());
             }}
             disabled={isLoading}
-            className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 hover:text-blue-300 text-slate-300 transition-all flex items-center gap-1.5 font-medium"
+            className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-[#00d294] hover:text-[#00d294] text-slate-300 transition-all flex items-center gap-1.5 font-medium"
           >
             <span>{site.name}</span>
-            <span className="text-[10px] text-slate-500 font-semibold px-1.5 py-0.2 bg-slate-950 rounded">
+            <span className="text-[10px] text-slate-400 font-semibold px-1.5 py-0.2 bg-slate-950 rounded">
               {site.badge}
             </span>
           </button>
@@ -96,9 +96,9 @@ export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
         <button
           type="button"
           onClick={() => setShowKeyInput(!showKeyInput)}
-          className="text-xs text-slate-400 hover:text-blue-400 flex items-center gap-1.5 transition-all font-medium"
+          className="text-xs text-slate-400 hover:text-[#00d294] flex items-center gap-1.5 transition-all font-medium"
         >
-          <Key className="h-3.5 w-3.5 text-blue-400" />
+          <Key className="h-3.5 w-3.5 text-[#00d294]" />
           {showKeyInput ? "Hide Gemini API Key input" : "Add optional Gemini API Key for deep AI observations"}
         </button>
       </div>
@@ -110,7 +110,7 @@ export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             placeholder="Paste Google Gemini API Key (optional)"
-            className="w-full px-3.5 py-2 text-xs bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 font-mono"
+            className="w-full px-3.5 py-2 text-xs bg-slate-950 border border-slate-800 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:border-[#00d294] font-mono"
           />
         </div>
       )}
@@ -120,16 +120,16 @@ export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
         <div className="mt-6 pt-4 border-t border-slate-800 text-left animate-fadeIn">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <Loader2 className="h-4 w-4 text-blue-400 spinner" />
+              <Loader2 className="h-4 w-4 text-[#00d294] spinner" />
               <span className="text-xs font-bold text-white">WAEF Pipeline Active</span>
             </div>
-            <span className="text-xs font-mono font-semibold text-blue-300 bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
+            <span className="text-xs font-mono font-semibold text-[#00d294] bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
               {auditStep}
             </span>
           </div>
 
           <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
-            <div className="bg-blue-500 h-full rounded-full animate-pulse transition-all duration-500 w-4/5"></div>
+            <div className="bg-[#00d294] h-full rounded-full animate-pulse transition-all duration-500 w-4/5"></div>
           </div>
         </div>
       )}
