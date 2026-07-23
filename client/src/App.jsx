@@ -17,6 +17,7 @@ import { WelcomeIntroOverlay } from "./components/WelcomeIntroOverlay";
 import { WebsiteComparisonModal } from "./components/WebsiteComparisonModal";
 import { DetailedComparisonView } from "./components/DetailedComparisonView";
 import { AuthModal } from "./components/AuthModal";
+import { ProductRoadmapModal } from "./components/ProductRoadmapModal";
 import { Footer } from "./components/Footer";
 import { generateDetailedPdfReport, generateComparativePdfReport } from "./utils/pdfGenerator";
 import { Download, AlertTriangle, ShieldCheck, FileText, Lock, Globe, Share2, X, Sparkles, Check, ArrowRight } from "lucide-react";
@@ -34,6 +35,7 @@ export default function App() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isRoadmapOpen, setIsRoadmapOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem("waef_user");
     return saved ? JSON.parse(saved) : null;
@@ -465,12 +467,27 @@ export default function App() {
         }}
       />
 
+      {/* Product Roadmap Modal */}
+      <ProductRoadmapModal
+        isOpen={isRoadmapOpen}
+        onClose={() => setIsRoadmapOpen(false)}
+      />
+
       <div className="max-w-7xl mx-auto">
+        {/* WCAG 2.2 AA Skip Link */}
+        <a
+          href="#audit-form-section"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#00d294] focus:text-slate-950 focus:font-bold focus:rounded-xl shadow-2xl"
+        >
+          Skip to main audit content
+        </a>
+
         <Header
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onOpenVideo={() => setIsVideoModalOpen(true)}
           onOpenCompare={() => setIsCompareModalOpen(true)}
+          onOpenRoadmap={() => setIsRoadmapOpen(true)}
           currentUser={currentUser}
           onOpenAuth={() => setIsAuthModalOpen(true)}
           serverStatus={serverStatus}
