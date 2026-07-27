@@ -1,6 +1,6 @@
-# 🌐 Ujjawal Groups Website Audit AI — WAEF v2.0 Platform
+# 🌐 Ujjawal Groups Website Audit AI — WAEF v2.0 Platform & Browser Extension
 
-> **Official Website Quality Index (WQI) 5-Pass Empirical Audit Platform & 25-Page Handbook Implementation**  
+> **Official Website Quality Index (WQI) 5-Pass Empirical Audit Platform & 1-Click Browser Extension**  
 > **Organization:** Ujjawal Groups  
 > **Author & Lead Engineer:** Ujjawal Sharma  
 > **GitHub Profile:** [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)  
@@ -12,9 +12,23 @@
 ## 🔗 Live Application & Links
 
 - 🚀 **Live Production Web Application:** [https://ujjawal-group-website-audit.vercel.app/](https://ujjawal-group-website-audit.vercel.app/)
+- 🧩 **Chrome / Edge Extension Source:** [`extension/`](./extension)
 - 👤 **Author GitHub Profile:** [https://github.com/Ujjawal07msd](https://github.com/Ujjawal07msd)
 - 💼 **Author LinkedIn Profile:** [https://www.linkedin.com/in/ujjawalsharma0804/](https://www.linkedin.com/in/ujjawalsharma0804/)
 - 📦 **GitHub Repository:** [https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit](https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit)
+
+---
+
+## 🧩 1-Click Browser Extension (Chrome, Edge & Firefox)
+
+Audit any active tab instantly without leaving your current webpage:
+
+1. **Chrome / Edge Installation**:
+   - Go to `chrome://extensions` or `edge://extensions`.
+   - Enable **Developer mode** toggle in top-right.
+   - Click **Load unpacked** and select the [`extension/`](./extension) directory from this repository.
+2. **Instant Auto-Audit**:
+   - Click the extension icon on any active website to run a real-time 5-pass empirical WQI audit automatically.
 
 ---
 
