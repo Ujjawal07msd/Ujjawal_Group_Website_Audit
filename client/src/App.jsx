@@ -30,9 +30,17 @@ export default function App() {
   const [auditStep, setAuditStep] = useState("");
   const [auditReport, setAuditReport] = useState(null);
   const [error, setError] = useState(null);
+  const [auditTargetUrl, setAuditTargetUrl] = useState("");
 
   // Modals & Interactivity States
-  const [isWelcomeOpen, setIsWelcomeOpen] = useState(true); // Clean Welcome Screen for Audio Unlocking
+  const [isWelcomeOpen, setIsWelcomeOpen] = useState(() => {
+    if (typeof window !== "undefined") {
+      const isIframe = window.self !== window.top;
+      const params = new URLSearchParams(window.location.search);
+      if (isIframe || params.get("url")) return false;
+    }
+    return true;
+  });
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -168,6 +176,20 @@ export default function App() {
       }, 3000);
     }
   };
+
+  // Automatically detect ?url=... query parameter (e.g. from Browser Extension)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlParam = params.get("url");
+    if (urlParam) {
+      const cleanUrl = decodeURIComponent(urlParam).trim();
+      if (cleanUrl) {
+        setAuditTargetUrl(cleanUrl);
+        setIsWelcomeOpen(false);
+        handleStartAudit(cleanUrl);
+      }
+    }
+  }, []);
 
   // Run Side-by-Side Comparison Audit
   const handleRunCompare = (urlA, urlB) => {
@@ -670,7 +692,7 @@ export default function App() {
         {activeTab === "audit" && (
           <main className="space-y-6">
             <div id="audit-form-section">
-              <UrlAuditForm onStartAudit={handleStartAudit} isLoading={isLoading} auditStep={auditStep} />
+              <UrlAuditForm onStartAudit={handleStartAudit} isLoading={isLoading} auditStep={auditStep} initialUrl={auditTargetUrl} />
             </div>
 
             {error && (

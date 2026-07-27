@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Search, Loader2, Key, Globe, Compass, Shield } from "lucide-react";
 
-export function UrlAuditForm({ onStartAudit, isLoading, auditStep }) {
-  const [url, setUrl] = useState("https://stripe.com");
-  const [apiKey, setApiKey] = useState("");
-  const [showKeyInput, setShowKeyInput] = useState(false);
+export function UrlAuditForm({ onStartAudit, isLoading, auditStep, initialUrl }) {
+  const [url, setUrl] = React.useState(initialUrl || "https://stripe.com");
+  const [apiKey, setApiKey] = React.useState("");
+  const [showKeyInput, setShowKeyInput] = React.useState(false);
+
+  React.useEffect(() => {
+    if (initialUrl) {
+      setUrl(initialUrl);
+    }
+  }, [initialUrl]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
