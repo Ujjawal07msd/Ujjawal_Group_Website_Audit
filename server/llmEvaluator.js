@@ -298,11 +298,48 @@ Response Time: ${crawlData.responseTimeMs}ms, HTTPS: ${crawlData.isHttps}
 
 Provide audit observations. Return JSON format.`;
 
-      await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-        { contents: [{ parts: [{ text: prompt }] }] },
-        { timeout: 8000 }
-      );
+      // Optional Gemini LLM call – returns structured JSON with additional observations
+      if (apiKey) {
+        try {
+          const prompt = `You are a senior website auditor applying the WAEF v2.0 handbook. Provide a JSON object with two top‑level fields:\n\n"parameterAdjustments": { "1": { "score": number, "note": "string" }, "2": { ... } },\n"priorityFixes": [{ "priority": "P1", "gain": "+5 pts", "description": "string", "codeSnippet": "string" }],\n"executiveSummary": "A concise 2‑paragraph summary of the audit."
+\nUse the data below to inform your answer.\n\nURL: ${crawlData.url}\nTitle: ${crawlData.title}\nMeta Description: ${crawlData.metaDescription}\nResponse Time: ${crawlData.responseTimeMs}ms\nHTTPS: ${crawlData.isHttps}\nImages: total ${crawlData.images.total}, missingAlt ${crawlData.images.missingAlt}\nHeadings: ${JSON.stringify(crawlData.headings)}\n\nReturn ONLY a JSON object, no explanatory text.`;
+
+          const response = await axios.post(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+            { contents: [{ parts: [{ text: prompt }] }] },
+            { timeout: 8000 }
+          );
+
+          // Gemini returns the generated text inside `candidates[0].content.parts[0].text`
+          const raw = response?.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            // Merge LLM‑provided adjustments into our parameter evaluation
+            if (parsed.parameterAdjustments) {
+              for (const [paramId, adj] of Object.entries(parsed.parameterAdjustments)) {
+                const pid = Number(paramId);
+                if (parametersEval[pid]) {
+                  // Override the score with the LLM‑suggested value (clamp to max points)
+                  const max = WAEF_PARAMETERS.find(p => p.id === pid)?.maxPoints || 0;
+                  const newScore = Math.min(adj.score, max);
+                  parametersEval[pid].scores = { ...(parametersEval[pid].scores || {}), llmScore: newScore };
+                  parametersEval[pid].notes = `${parametersEval[pid].notes || ''}\nLLM note: ${adj.note}`.trim();
+                }
+              }
+            }
+            // Store extra LLM artefacts for the frontend
+            if (parsed.priorityFixes) {
+              // Attach to a new field that the frontend can read
+              (global as any).llmPriorityFixes = parsed.priorityFixes;
+            }
+            if (parsed.executiveSummary) {
+              (global as any).llmExecutiveSummary = parsed.executiveSummary;
+            }
+          }
+        } catch (e) {
+          console.log("Gemini API optional call skipped:", e?.message || e);
+        }
+      }
     } catch (e) {
       console.log("Gemini API optional call skipped:", e.message);
     }
