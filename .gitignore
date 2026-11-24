@@ -20,7 +20,18 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Cache & OS Temp
+# Python Cache & venv
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Local Interview PDFs
+*.pdf
+Website_Audit_Interview_Guide.pdf
+
 .DS_Store
 Thumbs.db
 .idea

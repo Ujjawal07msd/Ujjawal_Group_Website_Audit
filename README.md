@@ -100,7 +100,10 @@ When auditing any target URL, the platform runs **5 distinct live scraping passe
 ## 💻 Tech Stack & Local Setup
 
 - **Frontend**: React + Vite, TailwindCSS, Lucide Icons, Canvas Confetti
-- **Backend**: Node.js + Express, Cheerio / Fetch, WAEF v2.0 Dynamic Engine
+- **Backend**: Python 3.12 + FastAPI (High-performance Async ASGI), Pydantic v2, Uvicorn
+- **AI & LLM**: Google Gemini 2.5 Flash (Structured Audit JSON & Executive Briefs)
+- **Scraping Engine**: Async HTTPX + BeautifulSoup4 (5-Pass Empirical Pipeline)
+- **API Documentation**: Interactive OpenAPI / Swagger UI (`/docs`) & ReDoc (`/redoc`)
 - **Deployment**: Vercel
 
 ### Local Development Setup
@@ -110,15 +113,17 @@ When auditing any target URL, the platform runs **5 distinct live scraping passe
 git clone https://github.com/Ujjawal07msd/Ujjawal_Group_Website_Audit.git
 cd "Ujjawal_Group_Website_Audit"
 
-# Install client dependencies
-cd client
+# 1. Start Python FastAPI Backend Server
+cd server
+pip install -r requirements.txt
+python main.py
+# Server runs on http://localhost:5000 (Swagger docs at http://localhost:5000/docs)
+
+# 2. Start React Frontend Client (in separate terminal)
+cd ../client
 npm install
 npm run dev
-
-# Install server dependencies (in separate terminal)
-cd ../server
-npm install
-npm start
+# Client runs on http://localhost:5173
 ```
 
 ---

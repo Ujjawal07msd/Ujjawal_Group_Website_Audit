@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "cd client && npm install && npm run build",
-    "start": "cd server && npm start"
+    "start": "cd server && python main.py",
+    "start:fastapi": "cd server && uvicorn main:app --reload --port 5000",
+    "start:node": "cd server && node index.js"
   }
 }
